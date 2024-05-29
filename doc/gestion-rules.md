@@ -60,12 +60,10 @@
 
 ## Gestion des repas et informations sur sa consommation
 
-- Le client peut renseigner les produits qu'il a consommés dans la journée de manière unitaire.
-- Le client peut composer ses repas qui seront une aggrégation de différents produits.
-- Le client peut modifier les produits consommés.
+- Le client peut composer ses repas qui seront soit un produit seul, soit une aggrégation de différents produits.
+- Le client doit renseigner l'heure de consommation de ses repas.
 - Le client peut modifier les repas consommés.
-- Le client peut supprimer un produit consommé uniquement le jour même.
 - Le client peut supprimer un repas consommé uniquement le jour même.
-- Le client peut renseigner la quantité de chacun des produits unitaires ou qui composent un repas.
+- Le client doit renseigner la quantité de chacun des produits qui composent un repas.
 - Le client peut déterminer un délai avant le prochain repas (jeûne intermitent).
 - Le client peut visualiser l'historique des repas qu'il a consommés.
