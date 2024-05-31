@@ -1,4 +1,4 @@
-# Introduction
+<!-- # Introduction
 
 Aujourd'hui, nous avons un défi ! Nous devons travailler sur l'aspect sécurité de notre application de suivi des calories. Pour ce faire, nous allons esquisser notre stratégie de sécurité ici et également répertorier les principales mesures de protection.
 
@@ -136,4 +136,58 @@ Le contenu d’une réponse de requête XHR doit être formaté par le serveur s
 Il est recommandé de vérifier que le niveau de confidentialité de la donnée manipulée est compatible avec la méthode HTTP proposée par l’API. Dans le cas contraire, il est recommandé de ne pas utiliser l’API proposée et de demander son évolution à son concepteur.
 
 - Utiliser XHR avec la méthode GET sous certaines conditions : La méthode GET véhicule les données des formulaires directement dans l’URL, cette dernière est conservée dans l’historique du navigateur, dans les journaux (logs) des serveurs d’applications, mais aussi dans ceux de tous les proxies d’interception, reverse-proxies ou autres points de terminaison TLS traversés par la requête. En outre, les réponses à ce type de requêtes sont sujettes à la mise en cache par les équipements. L’usage de la méthode GET n’est donc pas adapté à toutes les situations.
-- Utiliser XHR avec la méthode POST : Il est recommandé d’utiliser la méthode POST pour
+- Utiliser XHR avec la méthode POST : Il est recommandé d’utiliser la méthode POST pour -->
+
+# Stratégie de sécurisation
+
+## Introduction 
+
+Ici vous trouverez la stratégie de sécurisation que nous avons décider de mettre en place. Nous avons pris le parti de la scinder en 3 couches ainsi qu'une partie transversale. La première étant la couche Client, incluant la partie naviguateur (Frontend) et la partie mobile. La deuxième sera axé API pour et la dernière sur la couche base de données (BDD).
+
+Nous avons identifié 4 règles d'hygiène primordiales, que nous expliciterons à travers nos couches, qui sont les suivantes : défense en profondeur, principe de moindre privilège, réduction de la surface d'attaque ainsi que l'audit.
+
+## Sécurité transversale 
+
+### Principe de défense en profondeur
+
+### Mise en place d'audit
+
+## Client 
+
+### Sanitization des formulaires
+
+#### Vérification des mots des passe
+
+#### Se prémunir contre les injections SQL 
+
+### Mise en place du protocle HTTPS/HSTS au niveau du Client
+
+### Mise en place du CORS au niveau du Client
+
+## API 
+
+### Mise en place du protocle HTTPS/HSTS au niveau de l'API
+
+### Mise en place du CORS au niveau de l'API
+
+### Authentification
+
+#### Mise en place de token
+
+#### Session et durée de vie
+
+#### JWT 
+
+### Principe du moindre privilège
+
+#### [RBAC](./rbac.md)
+
+## Base de données 
+
+### Règlement Général sur la Protection des Données (RGPD)
+
+### Politique des mots de passe
+
+
+
+
