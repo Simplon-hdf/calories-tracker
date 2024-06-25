@@ -43,12 +43,11 @@ Il est parfois nécessaire de contourner la SOP (stratégie de sécurité par d�
 
 - Mise en place de token
 
-// REECRIRE: utilisation principe de sessions, curseur confort user/sécurite, appli pas ultra sensible
-Nous utiliserons des tokens pour permettre une meilleur gestion des sessions ainsi qu'un renforcement de la sécurité en assurant l’intégrité et la confidentialité des informations transmises.
+Nous avons décidé que notre application n’a pas d’informations sensibles qui nécessitent une sécurité très poussée. Donc, nous allons utiliser des tokens d’un an pour améliorer l’ergonomie avec la technologie JWT.
 
 - Session et durée de vie
 
-Pour les applications sensibles, la question de la durée de vie de session est primordiale car elle permet de sécuriser les données. Nous allons configurer un timeout qui agira toutes les 6 mois d’inactivité.
+Pour les applications sensibles, la question de la durée de vie de session est primordiale car elle permet de sécuriser les données. Nous allons configurer un timeout qui agira toutes les 1 ans d’inactivité.
 
 ### Autorisation 
 
@@ -69,8 +68,7 @@ Nous allons utiliser le CORS à ce niveau-là pour plusieurs raisons.
 
 ### Identification des utilisateurs
 
-// A REVOIR 
-Universally Unique IDentifier (UUID) évite le stockage par suite logique 
+Pour l'identification des utilisateur nous avons fais le choix d'utiliser un UID qui sont plus difficiles à deviner ou à falsifier, ce qui réduit le risque d'usurpation d'identité. Leur génération aléatoire et leur longueur rendent les attaques par force brute beaucoup plus difficiles.
 
 ### Règlement Général sur la Protection des Données (RGPD)
 
@@ -86,7 +84,7 @@ Nous allons nous appuyer sur les principes et règlements du RGPD pour nous aide
 - Le mot de passe requiert au minimun 8 caractères.
 - Le mot de passe requiert au minimun une majuscule, une minuscule, un chiffre et un caractère spécial.
 - L'utilisateur aura le droit à 8 tentatives d'authentification erronées.
-- Mise en place d'un système de récupération de mot de passe en cas d'échec répétés (mot de passe oublié)par mail.
+- Mise en place d'un système de récupération de mot de passe en cas d'échec répétés (mot de passe oublié) par mail.
 - L'utilisateur devra réinitialiser son mot de passe une fois par an.
 - Hachage et salage des mots de passe.  
 
