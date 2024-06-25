@@ -22,11 +22,7 @@ Un audit d’application est une évaluation systématique et indépendante de l
 
 ### Sanitization des formulaires (regex)
 
-Nous allons servir de regex pour pouvoir vérifier que les données que les utilisateurs renseigne sont bien conforme au format attendu avant d'envoyer les élements à la base données. 
-
-#### Vérification des mots des passe
-
-Pour la sécurisation des mots de passe ainsi que le renforcement de celui ci nous avons décider de mettre en place une politique des mots de passe adaptée que nous détaillerons [ici](#politique-des-mots-de-passe)
+Etant donné que l'un des concept fondamental est de ne pas faire confiance au client. Nous utilisons des regex pour pouvoir vérifier que les données renseignées par les utilisateurs sont bien conformes au format attendu (type de données de chaque input) avant d'envoyer les élements à la base de données.
 
 #### Se prémunir contre les injections SQL 
 
@@ -41,8 +37,26 @@ La mise en œuvre de HSTS se fait par la transmission d’un en-tête HTTP lors 
 
 Il est parfois nécessaire de contourner la SOP (stratégie de sécurité par défaut du navigateur) afin de permettre l’appel de ressources en dehors de l’Origin telles que peuvent en fournir des services web tiers de météo ou d’actualités par exemple.
 
-## API 
+## API
 
+### Authentification
+
+- Mise en place de token
+
+// REECRIRE: utilisation principe de sessions, curseur confort user/sécurite, appli pas ultra sensible
+Nous utiliserons des tokens pour permettre une meilleur gestion des sessions ainsi qu'un renforcement de la sécurité en assurant l’intégrité et la confidentialité des informations transmises.
+
+- Session et durée de vie
+
+Pour les applications sensibles, la question de la durée de vie de session est primordiale car elle permet de sécuriser les données. Nous allons configurer un timeout qui agira toutes les 6 mois d’inactivité.
+
+### Autorisation 
+
+- Principe du moindre privilège
+
+Ce principe vise à n’octroyer aux éléments et acteurs du système que les permissions strictement nécessaires pour fonctionner, ceci afin de limiter le risque de vol, d’altération ou de destruction de données en cas de compromission d’un ou plusieurs éléments.
+
+- [RBAC](./rbac.md)
 
 ### Mise en place du CORS au niveau de l'API
 
@@ -50,41 +64,29 @@ Nous allons utiliser le CORS à ce niveau-là pour plusieurs raisons.
 - La protection contre les requêtes inter-origines non autorisées.
 - Prévention des fuites de données sensibles.
 
-### Authentification
-
-Au niveeau de l'Authentification nous avons décider d'instaurer une authentification multifacteur pour couvrir les deux catégories 
-- Ce que je sais.
-- Ce que je possède.
-
-#### Mise en place de token
-
-Nous utiliserons des tokens pour permettre une meilleur gestion des sessions ainsi qu'un renforcement de la sécurité en assurant l’intégrité et la confidentialité des informations transmises.
-
-#### Session et durée de vie
-
-Pour les applications sensibles, la question de la durée de vie de session est primordiale car elle permet de sécuriser les données. Nous allons configurer un timeout qui agira toutes les 12h d’inactivité.
-
-### Principe du moindre privilège
-
-Ce principe vise à n’octroyer aux éléments et acteurs du système que les permissions strictement nécessaires pour fonctionner, ceci afin de limiter le risque de vol, d’altération ou de destruction de données en cas de compromission d’un ou plusieurs éléments.
-
-#### [RBAC](./rbac.md)
-
 ## Base de données
 
+
+### Identification des utilisateurs
+
+// A REVOIR 
+Universally Unique IDentifier (UUID) évite le stockage par suite logique 
 
 ### Règlement Général sur la Protection des Données (RGPD)
 
 Nous allons nous appuyer sur les principes et règlements du RGPD pour nous aider à sécuriser le plus possible les données de notre application avec quelques principes simples comme :
 
-- La cartographie des données.
-- Le controle d'accès au données.
+- Droit à la consultation des données
+- Droit de rectification des données
+- Droit de suppression des données
+- Un formulaire de demande aux administrateurs afin de faire les modifications nécessaires.
 
 ### Politique des mots de passe
 
 - Le mot de passe requiert au minimun 8 caractères.
 - Le mot de passe requiert au minimun une majuscule, une minuscule, un chiffre et un caractère spécial.
 - L'utilisateur aura le droit à 8 tentatives d'authentification erronées.
+- Mise en place d'un système de récupération de mot de passe en cas d'échec répétés (mot de passe oublié)par mail.
 - L'utilisateur devra réinitialiser son mot de passe une fois par an.
 - Hachage et salage des mots de passe.  
 
