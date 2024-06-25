@@ -22,8 +22,9 @@ Nous mettons en place une veille sécuritaire régulière afin de garantir la pr
 
 ### Sanitization des formulaires (regex)
 
-Nous allons servir de regex pour pouvoir vérifier que les données que les utilisateurs renseigne sont bien conforme au format attendu avant d'envoyer les élements à la base données. 
+Etant donné que l'un des concept fondamental est de ne pas faire confiance au client. Nous allons servir de regex pour pouvoir vérifier que les données que les utilisateurs renseigne sont bien conforme au format attendu (type de données de chaque input) avant d'envoyer les élements à la base données.
 
+// A REFORMULER
 #### Vérification des mots des passe
 
 Pour la sécurisation des mots de passe ainsi que le renforcement de celui ci nous avons décider de mettre en place une politique des mots de passe adaptée que nous détaillerons [ici](#politique-des-mots-de-passe)
@@ -31,7 +32,7 @@ Pour la sécurisation des mots de passe ainsi que le renforcement de celui ci no
 #### Se prémunir contre les injections SQL 
 
 Nous allons mettre en place des éléments permettant de réduire au maximum les chances d’injection SQL grâce à des requêtes préparées ainsi qu’à la vérification des données entrées par les utilisateurs.
-
+// FIN
 
 ### Mise en place du protocle HTTPS/HSTS au niveau du Client
 
