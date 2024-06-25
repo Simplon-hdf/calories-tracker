@@ -2,11 +2,11 @@
 
 ## MCD
 
-[Réprésentation MCD](../assets/images/mcd-calories-tracker.PNG)
+![Réprésentation MCD](../assets/images/mcd-calories-tracker.PNG)
 
 ## MLD
 
-[Réprésentation MLD](../assets/images/mld-calories-tracker.PNG)
+![Réprésentation MLD](../assets/images/mld-calories-tracker.PNG)
 
 ## MPD
 
