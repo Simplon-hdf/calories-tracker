@@ -11,7 +11,7 @@ Nous avons identifié quatre règles d’hygiène primordiales, que nous explici
 
 ### Principe de défense en profondeur
 
-Le principe de défense en profondeur consiste à mettre en œuvre plusieurs mesures de protection indépendantes les unes des autres. Nous allons ici essayer de verrouiller chaque couche de notre application indépendamment les unes des autres.
+Dans le cadre de notre stratégie de sécurité, nous avons opté pour la défense en profondeur. Cette approche consiste à superposer plusieurs couches de protection pour renforcer la sécurité de nos systèmes et données.
 
 ### Mise en place d'audit
 
