@@ -2,7 +2,7 @@
 
 ## Introduction 
 
-Ici, vous trouverez la stratégie de sécurisation que nous avons décidé de mettre en place. Nous avons choisi de la scinder en trois couches ainsi qu’une partie transversale. La première étant la couche Client, incluant la partie navigateur (Frontend) et la partie mobile. La deuxième sera axée sur l’API et la dernière sur la couche base de données (BDD).
+Ici, vous trouverez la stratégie de sécurisation que nous avons décidé de mettre en place. Nous avons choisi de travailler en couche N-tiers et de la scinder en trois ainsi qu’une partie transversale. La première étant la couche Client, incluant la partie navigateur (Frontend) et la partie mobile. La deuxième sera axée sur l’API et la dernière sur la couche base de données (BDD).
 
 Nous avons identifié quatre règles d’hygiène primordiales, que nous expliciterons à travers nos couches, qui sont les suivantes : défense en profondeur, principe de moindre privilège, réduction de la surface d’attaque ainsi que l’audit.
 
