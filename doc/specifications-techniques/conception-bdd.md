@@ -6,7 +6,7 @@
 
 ## MLD
 
-![Réprésentation MLD](../assets/images/mld-calories-tracker.PNG)
+![Réprésentation MLD](../assets/images/mld-calories-tracker.JPG)
 
 ## MPD
 
