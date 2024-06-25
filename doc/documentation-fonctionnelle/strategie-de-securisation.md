@@ -8,6 +8,7 @@ Nous avons identifié quatre règles d’hygiène primordiales, que nous explici
 
 ## Sécurité transversale 
 
+
 ### Principe de défense en profondeur
 
 Le principe de défense en profondeur consiste à mettre en œuvre plusieurs mesures de protection indépendantes les unes des autres. Nous allons ici essayer de verrouiller chaque couche de notre application indépendamment les unes des autres.
@@ -18,6 +19,7 @@ Un audit d’application est une évaluation systématique et indépendante de l
 
 ## Client 
 
+
 ### Sanitization des formulaires (regex)
 
 Nous allons servir de regex pour pouvoir vérifier que les données que les utilisateurs renseigne sont bien conforme au format attendu avant d'envoyer les élements à la base données. 
@@ -27,6 +29,8 @@ Nous allons servir de regex pour pouvoir vérifier que les données que les util
 Pour la sécurisation des mots de passe ainsi que le renforcement de celui ci nous avons décider de mettre en place une politique des mots de passe adaptée que nous détaillerons [ici](#politique-des-mots-de-passe)
 
 #### Se prémunir contre les injections SQL 
+
+Nous allons mettre en place des éléments permettant de réduire au maximum les chances d’injection SQL grâce à des requêtes préparées ainsi qu’à la vérification des données entrées par les utilisateurs.
 
 
 ### Mise en place du protocle HTTPS/HSTS au niveau du Client
@@ -42,6 +46,10 @@ Il est parfois nécessaire de contourner la SOP (stratégie de sécurité par d�
 
 ### Mise en place du CORS au niveau de l'API
 
+Nous allons utiliser le CORS à ce niveau-là pour plusieurs raisons.
+- La protection contre les requêtes inter-origines non autorisées.
+- Prévention des fuites de données sensibles.
+
 ### Authentification
 
 Au niveeau de l'Authentification nous avons décider d'instaurer une authentification multifacteur pour couvrir les deux catégories 
@@ -50,9 +58,11 @@ Au niveeau de l'Authentification nous avons décider d'instaurer une authentific
 
 #### Mise en place de token
 
+Nous utiliserons des tokens pour permettre une meilleur gestion des sessions ainsi qu'un renforcement de la sécurité en assurant l’intégrité et la confidentialité des informations transmises.
+
 #### Session et durée de vie
 
-Pour les applications sensibles, la question de la durée de vie de session est primordiale car elle permet de sécuriser les données. Nous allons configurer un timeout qui agira toutes les 15 minutes d’inactivité.
+Pour les applications sensibles, la question de la durée de vie de session est primordiale car elle permet de sécuriser les données. Nous allons configurer un timeout qui agira toutes les 12h d’inactivité.
 
 ### Principe du moindre privilège
 
@@ -60,13 +70,14 @@ Ce principe vise à n’octroyer aux éléments et acteurs du système que les p
 
 #### [RBAC](./rbac.md)
 
-## Base de données 
+## Base de données
+
 
 ### Règlement Général sur la Protection des Données (RGPD)
 
 Nous allons nous appuyer sur les principes et règlements du RGPD pour nous aider à sécuriser le plus possible les données de notre application avec quelques principes simples comme :
 
-- la cartographie des données.
+- La cartographie des données.
 - Le controle d'accès au données.
 
 ### Politique des mots de passe
