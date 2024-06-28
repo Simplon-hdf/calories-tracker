@@ -4,7 +4,7 @@
 
 Ici, vous trouverez la stratégie de sécurisation que nous avons décidé de mettre en place. Nous avons choisi de la scinder en trois couches ainsi qu’une partie transversale. La première étant la couche Client, incluant la partie navigateur (Frontend) et la partie mobile. La deuxième sera axée sur l’API et la dernière sur la couche base de données (BDD).
 
-Nous avons identifié quatre règles d’hygiène primordiales, que nous expliciterons à travers nos couches, qui sont les suivantes : défense en profondeur, principe de moindre privilège, réduction de la surface d’attaque ainsi que l’audit.
+Nous avons identifié quatre règles d’hygiène primordiales, que nous expliciterons à travers nos couches, qui sont les suivantes : défense en profondeur, principe de moindre privilège, réduction de la surface d’attaque ainsi que la mise en place d'une veille sécuritaire régulière.
 
 ## Sécurité transversale 
 
@@ -13,12 +13,11 @@ Nous avons identifié quatre règles d’hygiène primordiales, que nous explici
 
 Le principe de défense en profondeur consiste à mettre en œuvre plusieurs mesures de protection indépendantes les unes des autres. Nous allons ici essayer de verrouiller chaque couche de notre application indépendamment les unes des autres.
 
-### Mise en place d'audit
+### Mise en place d'une veille sécuritaire régulière
 
-Un audit d’application est une évaluation systématique et indépendante de l’application informatique d’une organisation. Son objectif est de vérifier et d’assurer que l’application est conforme aux normes, réglementations et bonnes pratiques en matière de sécurité, performance et fonctionnalité.
+Nous allons instaurer une veille sécuritaire régulière pour assurer la protection continue de nos systèmes et de nos données. Cela nous permettra de rester attentifs aux nouvelles menaces et de réagir rapidement si nécessaire. En surveillant constamment les éventuelles failles et en mettant à jour nos mesures de sécurité, nous pourrons mieux protéger notre organisation et garantir la sécurité de nos opérations au quotidien.
 
 ## Client 
-
 
 ### Sanitization des formulaires (regex)
 
@@ -47,7 +46,7 @@ Nous avons décidé que notre application n’a pas d’informations sensibles q
 
 - Session et durée de vie
 
-Pour les applications sensibles, la question de la durée de vie de session est primordiale car elle permet de sécuriser les données. Nous allons configurer un timeout qui agira toutes les 1 ans d’inactivité.
+Pour les applications sensibles, la question de la durée de vie de session est primordiale car elle permet de sécuriser les données. Nous allons configurer un timeout qui agira toutes les 1 an d’inactivité.
 
 ### Autorisation 
 
@@ -68,7 +67,7 @@ Nous allons utiliser le CORS à ce niveau-là pour plusieurs raisons.
 
 ### Identification des utilisateurs
 
-Pour l'identification des utilisateur nous avons fais le choix d'utiliser un UID qui sont plus difficiles à deviner ou à falsifier, ce qui réduit le risque d'usurpation d'identité. Leur génération aléatoire et leur longueur rendent les attaques par force brute beaucoup plus difficiles.
+Pour l'identification des utilisateur nous avons fais le choix d'utiliser un UUID qui sont plus difficiles à deviner ou à falsifier, ce qui réduit le risque d'usurpation d'identité. Leur génération aléatoire et leur longueur rendent les attaques par force brute beaucoup plus difficiles.
 
 ### Règlement Général sur la Protection des Données (RGPD)
 
@@ -86,7 +85,8 @@ Nous allons nous appuyer sur les principes et règlements du RGPD pour nous aide
 - L'utilisateur aura le droit à 8 tentatives d'authentification erronées.
 - Mise en place d'un système de récupération de mot de passe en cas d'échec répétés (mot de passe oublié) par mail.
 - L'utilisateur devra réinitialiser son mot de passe une fois par an.
-- Hachage et salage des mots de passe.  
+- Hashage des mots de passe avec bcrypt, qui est basée sur l'algorithme de chiffrement Blowfish.  
+- Salage des mots de passe dont la longueur sera définie à l'aide de bcrypt.
 
 
 
