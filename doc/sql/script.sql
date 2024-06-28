@@ -25,6 +25,14 @@ CREATE TABLE Localisation(
    PRIMARY KEY(id_localisation)
 );
 
+CREATE TABLE Admins(
+   uuid INT,
+   email VARCHAR(255) NOT NULL,
+   password VARCHAR(255) NOT NULL,
+   PRIMARY KEY(uuid),
+   UNIQUE(email)
+);
+
 CREATE TABLE Customers(
    uuid INT,
    firstname VARCHAR(50) NOT NULL,
