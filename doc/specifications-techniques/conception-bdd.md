@@ -6,7 +6,7 @@
 
 ## MLD
 
-![Réprésentation MLD](../assets/images/mld-calories-tracker.JPG)
+![Réprésentation MLD](../assets/images/mld-calories-tracker.PNG)
 
 ## MPD
 
@@ -36,6 +36,14 @@ CREATE TABLE Localisation(
    city VARCHAR(100) NOT NULL,
    zip_code VARCHAR(10) NOT NULL,
    PRIMARY KEY(id_localisation)
+);
+
+CREATE TABLE Admins(
+   uuid INT,
+   email VARCHAR(255) NOT NULL,
+   password VARCHAR(255) NOT NULL,
+   PRIMARY KEY(uuid),
+   UNIQUE(email)
 );
 
 CREATE TABLE Customers(
@@ -135,3 +143,6 @@ CREATE TABLE Product_Category_Products(
 |                               | id_meal              | INT             | -        | PRIMARY KEY(id_product, id_meal), FOREIGN KEY(id_meal) REFERENCES Meals(id_meal)                                                  | Référence au repas contenant le produit.       | 1                   |
 | **Product_Category_Products** | id_product           | INT             | -        | PRIMARY KEY(id_product, id_product_category), FOREIGN KEY(id_product) REFERENCES Products(id_product)                             | Référence au produit dans la catégorie.        | 1                   |
 |                               | id_product_category  | INT             | -        | PRIMARY KEY(id_product, id_product_category), FOREIGN KEY(id_product_category) REFERENCES Product_Categories(id_product_category) | Référence à la catégorie contenant le produit. | 1                   |
+| **Admins**                    | uuid                 | INT             | -        | PRIMARY KEY                                                                                                                       | Identifiant unique de l'administrateur.        | 1                   |
+|                               | email                | VARCHAR         | 255      | NOT NULL, UNIQUE                                                                                                                  | Adresse email de l'administrateur.             | admin@mail.com      |
+|                               | password             | VARCHAR         | 255      | NOT NULL                                                                                                                          | Mot de passe de l'administrateur.              | adminpass           |
