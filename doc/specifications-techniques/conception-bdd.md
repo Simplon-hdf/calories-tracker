@@ -11,18 +11,6 @@
 ## MPD
 
 ```sql
-CREATE TABLE Products(
-   id_product INT,
-   name VARCHAR(255) NOT NULL,
-   brand VARCHAR(100),
-   weight DECIMAL(5,1),
-   kcal INT NOT NULL,
-   carbohydrates DECIMAL(4,2),
-   lipids DECIMAL(4,2),
-   proteins DECIMAL(4,2),
-   PRIMARY KEY(id_product)
-);
-
 CREATE TABLE Product_Categories(
    id_product_category INT,
    name VARCHAR(50) NOT NULL,
@@ -71,6 +59,20 @@ CREATE TABLE Customers(
    FOREIGN KEY(uuid) REFERENCES Persons(uuid),
    FOREIGN KEY(id_admin) REFERENCES Admin(id_admin),
    FOREIGN KEY(id_localisation) REFERENCES Localisation(id_localisation)
+);
+
+CREATE TABLE Products(
+   id_product INT,
+   name VARCHAR(255) NOT NULL,
+   brand VARCHAR(100),
+   weight DECIMAL(5,1),
+   kcal INT NOT NULL,
+   carbohydrates DECIMAL(4,2),
+   lipids DECIMAL(4,2),
+   proteins DECIMAL(4,2),
+   uuid INT,
+   PRIMARY KEY(id_product),
+   FOREIGN KEY(uuid) REFERENCES Customers(uuid)
 );
 
 CREATE TABLE Targets(
@@ -130,14 +132,6 @@ CREATE TABLE Admin_Products(
    FOREIGN KEY(id_product) REFERENCES Products(id_product),
    FOREIGN KEY(id_admin) REFERENCES Admin(id_admin)
 );
-
-CREATE TABLE Customer_Products(
-   uuid INT,
-   id_product INT,
-   PRIMARY KEY(uuid, id_product),
-   FOREIGN KEY(uuid) REFERENCES Customers(uuid),
-   FOREIGN KEY(id_product) REFERENCES Products(id_product)
-);
 ```
 
 ## Dictionnaire de données
@@ -152,6 +146,7 @@ CREATE TABLE Customer_Products(
 |                          | carbohydrates        | DECIMAL         | 4,2      | -                                            | Quantité de glucides en grammes.                               | 14.0          |
 |                          | lipids               | DECIMAL         | 4,2      | -                                            | Quantité de lipides en grammes.                                | 0.2           |
 |                          | proteins             | DECIMAL         | 4,2      | -                                            | Quantité de protéines en grammes.                              | 0.3           |
+|                          | uuid             | INT         | -      | FOREIGN KEY(uuid) REFERENCES Customers(uuid)                                            | Référence à la personne qui a créé ce produit.                              | 123e4567-e89b-12d3-a456-426614174000           |
 | **Product_Categories**   | id_product_category  | INT             | -        | PRIMARY KEY                                  | Identifiant unique de la catégorie de produit.                 | 1             |
 |                          | name                 | VARCHAR         | 50       | NOT NULL, UNIQUE                             | Nom de la catégorie de produit.                                | Fruits        |
 | **Localisation**         | id_localisation      | INT             | -        | PRIMARY KEY                                  | Identifiant unique de la localisation.                         | 1             |
@@ -197,5 +192,3 @@ CREATE TABLE Customer_Products(
 |                          | id_product_category  | INT             | -        | PRIMARY KEY(id_product, id_product_category), FOREIGN KEY(id_product_category) REFERENCES Product_Categories(id_product_category) | Référence à la catégorie contenant le produit. | 1             |
 | **Admin_Products**       | id_product           | INT             | -        | PRIMARY KEY(id_product, id_admin), FOREIGN KEY(id_product) REFERENCES Products(id_product) | Référence au produit géré par l'administrateur.               | 1             |
 |                          | id_admin             | INT             | -        | PRIMARY KEY(id_product, id_admin), FOREIGN KEY(id_admin) REFERENCES Admin(id_admin) | Référence à l'administrateur gérant le produit.               | 1             |
-| **Customer_Products**    | uuid                 | INT             | -        | PRIMARY KEY(uuid, id_product), FOREIGN KEY(uuid) REFERENCES Customers(uuid) | Référence au client ayant consommé le produit.                 | 123e4567-e89b-12d3-a456-426614174000             |
-|                          | id_product           | INT             | -        | PRIMARY KEY(uuid, id_product), FOREIGN KEY(id_product) REFERENCES Products(id_product) | Référence au produit consommé par le client.                  | 1             |

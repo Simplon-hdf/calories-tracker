@@ -1,15 +1,3 @@
-CREATE TABLE Products(
-   id_product INT,
-   name VARCHAR(255) NOT NULL,
-   brand VARCHAR(100),
-   weight DECIMAL(5,1),
-   kcal INT NOT NULL,
-   carbohydrates DECIMAL(4,2),
-   lipids DECIMAL(4,2),
-   proteins DECIMAL(4,2),
-   PRIMARY KEY(id_product)
-);
-
 CREATE TABLE Product_Categories(
    id_product_category INT,
    name VARCHAR(50) NOT NULL,
@@ -58,6 +46,20 @@ CREATE TABLE Customers(
    FOREIGN KEY(uuid) REFERENCES Persons(uuid),
    FOREIGN KEY(id_admin) REFERENCES Admin(id_admin),
    FOREIGN KEY(id_localisation) REFERENCES Localisation(id_localisation)
+);
+
+CREATE TABLE Products(
+   id_product INT,
+   name VARCHAR(255) NOT NULL,
+   brand VARCHAR(100),
+   weight DECIMAL(5,1),
+   kcal INT NOT NULL,
+   carbohydrates DECIMAL(4,2),
+   lipids DECIMAL(4,2),
+   proteins DECIMAL(4,2),
+   uuid INT,
+   PRIMARY KEY(id_product),
+   FOREIGN KEY(uuid) REFERENCES Customers(uuid)
 );
 
 CREATE TABLE Targets(
@@ -116,12 +118,4 @@ CREATE TABLE Admin_Products(
    PRIMARY KEY(id_product, id_admin),
    FOREIGN KEY(id_product) REFERENCES Products(id_product),
    FOREIGN KEY(id_admin) REFERENCES Admin(id_admin)
-);
-
-CREATE TABLE Customer_Products(
-   uuid INT,
-   id_product INT,
-   PRIMARY KEY(uuid, id_product),
-   FOREIGN KEY(uuid) REFERENCES Customers(uuid),
-   FOREIGN KEY(id_product) REFERENCES Products(id_product)
 );
