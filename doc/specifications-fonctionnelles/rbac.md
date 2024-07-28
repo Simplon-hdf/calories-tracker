@@ -1,34 +1,59 @@
-# RBAC
+# RBAC (Role-Based Access Control)
 
-| Fonctionnalités                            | visitor | customer | admin |
-| ------------------------------------------ | ------- | -------- | ----- |
-| Visiter la homepage                        | ✅      | ✅       | ✅    |
-| Modifier la homepage                        | ⛔      | ⛔       | ✅    |
-| Inscription au service                     | ✅      | ✅       | ✅    |
-| Connexion au service                       | ⛔      | ✅       | ✅    |
-| Déconnexion du service                     | ⛔      | ✅       | ✅    |
-| Résiliation au service                     | ⛔      | ✅       | ✅    |
-| Définir son poids                          | ⛔      | ✅       | ✅    |
-| Modifier son poids                         | ⛔      | ✅       | ✅    |
-| Supprimer son poids                        | ⛔      | ✅       | ✅    |
-| Définir sa taille                          | ⛔      | ✅       | ✅    |
-| Modifier sa taille                         | ⛔      | ✅       | ✅    |
-| Supprimer sa taille                        | ⛔      | ✅       | ✅    |
-| Accéder au suivi de ses objectifs          | ⛔      | ✅       | ✅    |
-| Modifier ses objectifs                     | ⛔      | ✅       | ✅    |
-| Supprimer ses objectifs                    | ⛔      | ✅       | ✅    |
-| Voir les produits disponibles              | ⛔      | ✅       | ✅    |
-| Ajouter son produit                        | ⛔      | ✅       | ✅    |
-| Modifier son produit                       | ⛔      | ✅       | ✅    |
-| Supprimer son produit                      | ⛔      | ✅       | ✅    |
-| Voir ses informations personnelles         | ⛔      | ✅       | ✅    |
-| Modifier ses informations personnelles     |
-| Modifier son email                         | ⛔      | ✅       | ✅    |
-| Modifier son numéro de téléphone           | ⛔      | ✅       | ✅    |
-| Modifier son adresse postale               | ⛔      | ✅       | ✅    |
-| Modifier son mot de passe                  | ⛔      | ✅       | ✅    |
-| Modifier ses informations personnelles     |
-| Supprimer son numéro de téléphone          | ⛔      | ✅       | ✅    |
-| Modifier son adresse postale               | ⛔      | ✅       | ✅    |
-| Modifier les informations d'un utilisateur | ⛔      | ⛔       | ✅    |
-| Supprimer un utilisateur                   | ⛔      | ⛔       | ✅    |
+| **Catégorie**                                       | **Fonctionnalités**                                                                                                                                     | **visitor** | **customer** | **admin** |
+|-----------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|------------|--------------|-----------|
+| **Visite du site Calories Tracker**                 | Accéder à la page d'accueil                                                                                                                            | ✅          | ✅            | ✅         |
+|                                                     | Consulter les services proposés                                                                                                                       | ✅          | ✅            | ✅         |
+| **Inscription**                                     | S'inscrire au service                                                                                                                                  | ✅          | ⛔            | ⛔         |
+|                                                     | Remplir le formulaire d'inscription                                                                                                                   | ✅          | ⛔            | ⛔         |
+| **Connexion**                                       | Se connecter au service                                                                                                                                | ⛔          | ✅            | ✅         |
+|                                                     | Réinitialiser le mot de passe                                                                                                                          | ⛔          | ✅            | ✅         |
+| **Gestion des informations personnelles**           | Modifier l'email                                                                                                                                       | ⛔          | ✅            | ✅         |
+|                                                     | Modifier le mot de passe                                                                                                                              | ⛔          | ✅            | ✅         |
+|                                                     | Modifier le prénom                                                                                                                                    | ⛔          | ✅            | ✅         |
+|                                                     | Modifier le nom                                                                                                                                       | ⛔          | ✅            | ✅         |
+|                                                     | Modifier le genre                                                                                                                                      | ⛔          | ✅            | ✅         |
+|                                                     | Modifier l'adresse                                                                                                                                     | ⛔          | ✅            | ✅         |
+|                                                     | Modifier le numéro de téléphone                                                                                                                       | ⛔          | ✅            | ✅         |
+|                                                     | Demander la suppression du compte                                                                                                                     | ⛔          | ✅            | ⛔         |
+|                                                     | Désactiver le compte                                                                                                                                   | ⛔          | ✅            | ⛔         |
+|                                                     | Réactiver le compte (dans un délai de 30 jours)                                                                                                        | ⛔          | ✅            | ⛔         |
+|                                                     | Définir le poids                                                                                                                                       | ⛔          | ✅            | ✅         |
+|                                                     | Modifier le poids                                                                                                                                      | ⛔          | ✅            | ✅         |
+|                                                     | Supprimer le poids                                                                                                                                    | ⛔          | ✅            | ✅         |
+|                                                     | Définir la taille                                                                                                                                      | ⛔          | ✅            | ✅         |
+|                                                     | Modifier la taille                                                                                                                                    | ⛔          | ✅            | ✅         |
+|                                                     | Supprimer la taille                                                                                                                                   | ⛔          | ✅            | ✅         |
+| **Gestion de son objectif**                         | Créer un seul objectif                                                                                                                                | ⛔          | ✅            | ✅         |
+|                                                     | Supprimer l'objectif                                                                                                                                   | ⛔          | ✅            | ✅         |
+|                                                     | Mettre fin à l'objectif                                                                                                                               | ⛔          | ✅            | ✅         |
+|                                                     | Créer un nouvel objectif après suppression ou fin d'un objectif existant                                                                               | ⛔          | ✅            | ✅         |
+|                                                     | Nommer l'objectif                                                                                                                                    | ⛔          | ✅            | ✅         |
+|                                                     | Définir un type d'objectif (prise ou perte de poids)                                                                                                   | ⛔          | ✅            | ✅         |
+|                                                     | Définir son poids cible                                                                                                                               | ⛔          | ✅            | ✅         |
+|                                                     | Modifier son poids cible                                                                                                                              | ⛔          | ✅            | ✅         |
+|                                                     | Définir la date de démarrage                                                                                                                          | ⛔          | ✅            | ✅         |
+|                                                     | Définir la date de fin                                                                                                                                | ⛔          | ✅            | ✅         |
+|                                                     | Modifier la date de fin                                                                                                                              | ⛔          | ✅            | ✅         |
+|                                                     | Suivre l'objectif en temps réel                                                                                                                       | ⛔          | ✅            | ✅         |
+|                                                     | Consulter l'IMC (Indice de Masse Corporelle)                                                                                                           | ⛔          | ✅            | ✅         |
+|                                                     | Consulter la quantité de calories à consommer dans la journée                                                                                         | ⛔          | ✅            | ✅         |
+|                                                     | Consulter la quantité de calories consommées par jour                                                                                                  | ⛔          | ✅            | ✅         |
+|                                                     | Consulter l'historique des objectifs passés                                                                                                           | ⛔          | ✅            | ✅         |
+| **Gestion des produits**                            | Rechercher une catégorie de produit                                                                                                                   | ⛔          | ✅            | ✅         |
+|                                                     | Rechercher un produit pour consulter ses informations nutritionnelles                                                                                 | ⛔          | ✅            | ✅         |
+|                                                     | Scanner un produit pour consulter les informations nutritionnelles                                                                                    | ⛔          | ✅            | ✅         |
+|                                                     | Ajouter un produit avec des informations nutritionnelles                                                                                              | ⛔          | ✅            | ✅         |
+|                                                     | Rattacher un produit à une catégorie existante                                                                                                         | ⛔          | ✅            | ✅         |
+|                                                     | Modifier un produit                                                                                                                                   | ⛔          | ✅            | ✅         |
+|                                                     | Supprimer un produit                                                                                                                                  | ⛔          | ✅            | ✅         |
+| **Gestion des repas et informations de consommation quotidienne**| Composer ses repas (produit seul ou combinaison de produits)                                                                                           | ⛔          | ✅            | ✅         |
+|                                                     | Renseigner l'heure de consommation des repas                                                                                                           | ⛔          | ✅            | ✅         |
+|                                                     | Modifier les repas consommés                                                                                                                          | ⛔          | ✅            | ✅         |
+|                                                     | Supprimer un repas consommé le jour même                                                                                                              | ⛔          | ✅            | ✅         |
+|                                                     | Renseigner la quantité de chaque produit dans un repas                                                                                                | ⛔          | ✅            | ✅         |
+|                                                     | Visualiser l'historique des repas consommés                                                                                                            | ⛔          | ✅            | ✅         |
+| **Administration**                                  | Supprimer un client                                                                                                                                   | ⛔          | ⛔            | ✅         |
+|                                                     | Supprimer l'objectif et les repas d'un client lors de sa suppression                                                                                   | ⛔          | ⛔            | ✅         |
+|                                                     | Modifier un produit créé par un client                                                                                                                | ⛔          | ⛔            | ✅         |
+|                                                     | Supprimer un produit créé par un client                                                                                                               | ⛔          | ⛔            | ✅         |
