@@ -2,102 +2,127 @@
 
 ## MCD
 
-![Réprésentation MCD](../assets/images/mcd-calories-tracker.PNG)
+![Réprésentation MCD](../assets/images/McdFinale.PNG)
 
 ## MLD
 
-![Réprésentation MLD](../assets/images/mld-calories-tracker.PNG)
+![Réprésentation MLD](../assets/images/MldFinale.PNG)
 
 ## MPD
 
+![Réprésentation MLD](../assets/images/MpdFinale.PNG)
+
 ```sql
-CREATE TABLE Products(
-   id_product INT,
-   name VARCHAR(100) NOT NULL,
-   brand VARCHAR(100) NOT NULL,
-   weight DECIMAL(4,1),
-   energetic_value_kcal INT NOT NULL,
-   carbohydrates DECIMAL(4,2) NOT NULL,
-   lipids DECIMAL(4,2) NOT NULL,
-   proteins DECIMAL(4,2) NOT NULL,
-   PRIMARY KEY(id_product)
+CREATE TABLE Products (
+   id_product SERIAL PRIMARY KEY,
+   name VARCHAR(255) NOT NULL,
+   brand VARCHAR(100),
+   weight DECIMAL(5,1),
+   kcal INT NOT NULL,
+   carbohydrates DECIMAL(4,2),
+   lipids DECIMAL(4,2),
+   proteins DECIMAL(4,2)
 );
 
-CREATE TABLE Product_Categories(
-   id_product_category INT,
-   name VARCHAR(50) NOT NULL,
-   PRIMARY KEY(id_product_category),
-   UNIQUE(name)
+CREATE TABLE Product_Categories (
+   id_product_category SERIAL PRIMARY KEY,
+   name VARCHAR(50) NOT NULL UNIQUE
 );
 
-CREATE TABLE Localisation(
-   id_localisation INT,
-   adress VARCHAR(100) NOT NULL,
-   city VARCHAR(100) NOT NULL,
-   zip_code VARCHAR(10) NOT NULL,
-   PRIMARY KEY(id_localisation)
+CREATE TABLE Localisation (
+   id_localisation SERIAL PRIMARY KEY,
+   adress VARCHAR(255) NOT NULL,
+   city VARCHAR(255) NOT NULL,
+   zip_code VARCHAR(20),
+   country VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE Admins(
-   uuid INT,
-   email VARCHAR(255) NOT NULL,
-   password VARCHAR(255) NOT NULL,
-   PRIMARY KEY(uuid),
-   UNIQUE(email)
+CREATE TABLE Persons (
+   uuid SERIAL PRIMARY KEY,
+   firstname VARCHAR(100) NOT NULL,
+   lastname VARCHAR(100) NOT NULL,
+   email VARCHAR(255) NOT NULL UNIQUE,
+   password VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE Customers(
-   uuid INT,
-   firstname VARCHAR(50) NOT NULL,
-   lastname VARCHAR(50) NOT NULL,
-   email VARCHAR(255) NOT NULL,
-   password VARCHAR(255) NOT NULL,
-   phone VARCHAR(20),
-   weight DECIMAL(4,1),
-   height DECIMAL(3,0),
+CREATE TABLE Admin (
+   id_admin SERIAL PRIMARY KEY,
+   uuid INT NOT NULL UNIQUE,
+   FOREIGN KEY(uuid) REFERENCES Persons(uuid)
+);
+
+CREATE TABLE Customers (
+   uuid INT PRIMARY KEY,
+   phone VARCHAR(20) UNIQUE,
+   weight DECIMAL(4,1) NOT NULL,
+   height DECIMAL(3,0) NOT NULL,
+   gender VARCHAR(10) NOT NULL,
+   id_admin INT,
    id_localisation INT NOT NULL,
-   PRIMARY KEY(uuid),
-   UNIQUE(email),
-   UNIQUE(phone),
+   FOREIGN KEY(uuid) REFERENCES Persons(uuid),
+   FOREIGN KEY(id_admin) REFERENCES Admin(id_admin),
    FOREIGN KEY(id_localisation) REFERENCES Localisation(id_localisation)
 );
 
-CREATE TABLE Meals(
-   id_meal INT,
-   title_meal VARCHAR(100) NOT NULL,
-   meal_time DATETIME NOT NULL,
-   uuid INT NOT NULL,
-   PRIMARY KEY(id_meal),
-   FOREIGN KEY(uuid) REFERENCES Customers(uuid)
-);
-
-CREATE TABLE Targets(
-   id_target INT,
+CREATE TABLE Targets (
+   id_target SERIAL PRIMARY KEY,
    name VARCHAR(100) NOT NULL,
    target_type VARCHAR(50) NOT NULL,
-   weight_target DECIMAL(4,1),
+   weight_target DECIMAL(4,1) NOT NULL,
    start_date DATE NOT NULL,
-   end_date DATE,
-   uuid INT NOT NULL,
-   PRIMARY KEY(id_target),
-   UNIQUE(uuid),
+   end_date DATE NOT NULL,
+   daily_kcal_target INT,
+   uuid INT NOT NULL UNIQUE,
    FOREIGN KEY(uuid) REFERENCES Customers(uuid)
 );
 
-CREATE TABLE Meal_Products(
+CREATE TABLE Daily_Consumptions (
+   id_daily_consumption SERIAL PRIMARY KEY,
+   kcal_quantity INT,
+   uuid INT NOT NULL UNIQUE,
+   FOREIGN KEY(uuid) REFERENCES Customers(uuid)
+);
+
+CREATE TABLE Meals (
+   id_meal SERIAL PRIMARY KEY,
+   title VARCHAR(100),
+   meal_time TIMESTAMP NOT NULL,
+   id_daily_consumption INT NOT NULL,
+   FOREIGN KEY(id_daily_consumption) REFERENCES Daily_Consumptions(id_daily_consumption)
+);
+
+CREATE TABLE Meal_Products (
    id_product INT,
    id_meal INT,
+   product_quantity DECIMAL(5,1) NOT NULL,
+   unit VARCHAR(10),
    PRIMARY KEY(id_product, id_meal),
    FOREIGN KEY(id_product) REFERENCES Products(id_product),
    FOREIGN KEY(id_meal) REFERENCES Meals(id_meal)
 );
 
-CREATE TABLE Product_Category_Products(
+CREATE TABLE Product_Category_Products (
    id_product INT,
    id_product_category INT,
    PRIMARY KEY(id_product, id_product_category),
    FOREIGN KEY(id_product) REFERENCES Products(id_product),
    FOREIGN KEY(id_product_category) REFERENCES Product_Categories(id_product_category)
+);
+
+CREATE TABLE Admin_Products (
+   id_product INT,
+   id_admin INT,
+   PRIMARY KEY(id_product, id_admin),
+   FOREIGN KEY(id_product) REFERENCES Products(id_product),
+   FOREIGN KEY(id_admin) REFERENCES Admin(id_admin)
+);
+
+CREATE TABLE Customer_Products (
+   uuid INT,
+   id_product INT,
+   PRIMARY KEY(uuid, id_product),
+   FOREIGN KEY(uuid) REFERENCES Customers(uuid),
+   FOREIGN KEY(id_product) REFERENCES Products(id_product)
 );
 ```
 
