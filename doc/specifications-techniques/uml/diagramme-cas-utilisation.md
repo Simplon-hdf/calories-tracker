@@ -8,4 +8,4 @@ Le diagramme qui suit est découpé en plusieurs parties de l'application repré
 - Vert clair : Gestion et suivi de ses repas
 - Rouge pale : Suppression de compte par l'administrateur.
 
-![Diagramme de cas d'utilisation](../../assets/images/use-case.PNG)
+![Diagramme de cas d'utilisation](../../assets/images/use-case.png)
