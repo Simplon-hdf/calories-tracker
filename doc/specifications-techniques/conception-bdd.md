@@ -2,15 +2,15 @@
 
 ## MCD
 
-![Réprésentation MCD](../assets/images/McdFinale.PNG)
+![Réprésentation MCD](../assets/images/mcd-diagram.png)
 
 ## MLD
 
-![Réprésentation MLD](../assets/images/MldFinale.PNG)
+![Réprésentation MLD](../assets/images/mld-diagram.png)
 
 ## MPD
 
-![Réprésentation MLD](../assets/images/MpdFinale.PNG)
+![Réprésentation MPD](../assets/images/mpd-diagram.png)
 
 ```sql
 CREATE TABLE Products (
