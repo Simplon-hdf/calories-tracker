@@ -15,4 +15,4 @@
 | Documentation               | 1   | 4       | 4    | 2     | 3      | 3    |
 | Mariage librairies          | 4   | 5       | 4    | 3     | 3      | 3    |
 | Tarifs                      | Gratuit | Gratuit | Gratuit | Gratuit | Gratuit | Gratuit |
-| Total                       | 26  | 50 🥇     | 40 🥈  | 31    | 32 🥉    | 31   |
+| Total                       | 26  | 50 🥇   | 40 🥈| 31    | 32 🥉  | 31   |
