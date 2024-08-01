@@ -1,0 +1,21 @@
+{
+  "name": "calories-tracker",
+  "version": "1.0.0",
+  "description": "A school project designed to help users monitor their daily calorie consumption in order to achieve their health and well-being goals.",
+  "main": "app.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "prisma": "^5.17.0"
+  }
+}
