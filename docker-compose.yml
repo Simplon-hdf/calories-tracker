@@ -12,8 +12,10 @@ services:
       - ./api/node_modules:/app/node_modules
     networks: 
       - calories-tracker
+    depends_on:
+      - db
     environment:
-      - DATABASE_URL=postgresql://ct-admin:cdadevops@db:5432/calories-tracker-db
+      - DATABASE_URL=postgresql://ct-admin:cdadevops2024@db:5432/calories-tracker-db
 
   db: 
     image: postgres:16.0-alpine3.18

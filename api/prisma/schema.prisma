@@ -12,3 +12,134 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Product {
+  id_product      Int                 @id @default(autoincrement()) @map("id_product")
+  name            String              @db.VarChar(255)
+  brand           String?             @db.VarChar(100)
+  weight          Decimal?            @db.Decimal(5, 1)
+  kcal            Int
+  carbohydrates   Decimal?            @db.Decimal(4, 2)
+  lipids          Decimal?            @db.Decimal(4, 2)
+  proteins        Decimal?            @db.Decimal(4, 2)
+  Admin_Product   Admin_Product[]
+  Meal_Product    Meal_Product[]
+  Product_Category_Product Product_Category_Product[]
+  Customer_Product Customer_Product[]
+}
+
+model Product_Categorie {
+  id_product_category Int                   @id @default(autoincrement()) @map("id_product_category")
+  name                String                @unique @db.VarChar(50)
+  Product_Category_Product Product_Category_Product[]
+}
+
+model Localisation {
+  id_localisation Int                   @id @default(autoincrement()) @map("id_localisation")
+  adress          String                @db.VarChar(255)
+  city            String                @db.VarChar(255)
+  zip_code        String?               @db.VarChar(20)
+  country         String                @db.VarChar(50)
+  Customer        Customer[]
+}
+
+model Person {
+  uuid      Int                   @id @default(autoincrement())
+  firstname String                @db.VarChar(100)
+  lastname  String                @db.VarChar(100)
+  email     String                @unique @db.VarChar(255)
+  password  String                @db.VarChar(255)
+  Admin     Admin?
+  Customer  Customer?
+}
+
+model Admin {
+  id_admin Int                @id @default(autoincrement()) @map("id_admin")
+  uuid     Int                @unique
+  Person   Person             @relation(fields: [uuid], references: [uuid])
+  Admin_Product Admin_Product[]
+  Customer Customer[]
+}
+
+model Customer {
+  uuid              Int                  @id
+  phone             String?              @unique @db.VarChar(20)
+  weight            Decimal              @db.Decimal(4, 1)
+  height            Decimal              @db.Decimal(3, 0)
+  gender            String               @db.VarChar(10)
+  id_admin          Int?
+  id_localisation   Int
+  Person            Person               @relation(fields: [uuid], references: [uuid])
+  Admin             Admin?               @relation(fields: [id_admin], references: [id_admin])
+  Localisation      Localisation         @relation(fields: [id_localisation], references: [id_localisation])
+  Target            Target?
+  Daily_Consumption Daily_Consumption?
+  Customer_Product  Customer_Product[]
+}
+
+model Target {
+  id_target           Int      @id @default(autoincrement()) @map("id_target")
+  name                String   @db.VarChar(100)
+  target_type         String   @db.VarChar(50)
+  weight_target       Decimal  @db.Decimal(4, 1)
+  start_date          DateTime @db.Date
+  end_date            DateTime @db.Date
+  daily_kcal_target   Int?
+  uuid                Int      @unique
+  Customer            Customer @relation(fields: [uuid], references: [uuid])
+}
+
+model Daily_Consumption {
+  id_daily_consumption Int      @id @default(autoincrement()) @map("id_daily_consumption")
+  kcal_quantity        Int?
+  uuid                 Int      @unique
+  Customer             Customer @relation(fields: [uuid], references: [uuid])
+  Meal                 Meal[]
+}
+
+model Meal {
+  id_meal              Int      @id @default(autoincrement()) @map("id_meal")
+  title                String?  @db.VarChar(100)
+  meal_time            DateTime
+  id_daily_consumption Int
+  Daily_Consumption    Daily_Consumption @relation(fields: [id_daily_consumption], references: [id_daily_consumption])
+  Meal_Product         Meal_Product[]
+}
+
+model Meal_Product {
+  id_product        Int
+  id_meal           Int
+  product_quantity  Decimal  @db.Decimal(5, 1)
+  unit              String?  @db.VarChar(10)
+  Product           Product  @relation(fields: [id_product], references: [id_product])
+  Meal              Meal     @relation(fields: [id_meal], references: [id_meal])
+
+  @@id([id_product, id_meal])
+}
+
+model Product_Category_Product {
+  id_product          Int
+  id_product_category Int
+  Product             Product            @relation(fields: [id_product], references: [id_product])
+  Product_Categorie   Product_Categorie  @relation(fields: [id_product_category], references: [id_product_category])
+
+  @@id([id_product, id_product_category])
+}
+
+model Admin_Product {
+  id_product Int
+  id_admin   Int
+  Product    Product  @relation(fields: [id_product], references: [id_product])
+  Admin      Admin    @relation(fields: [id_admin], references: [id_admin])
+
+  @@id([id_product, id_admin])
+}
+
+model Customer_Product {
+  uuid      Int
+  id_product Int
+  Customer  Customer  @relation(fields: [uuid], references: [uuid])
+  Product   Product   @relation(fields: [id_product], references: [id_product])
+
+  @@id([uuid, id_product])
+}
