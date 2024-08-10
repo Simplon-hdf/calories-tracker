@@ -1,7 +1,7 @@
-.DS_Store
-node_modules
 .env
 .env.local
+.DS_Store
+node_modules
 docker-compose.override.yml
 Dockerfile.dkt
 ZscalerRootCertificate-2048-SHA256.crt
