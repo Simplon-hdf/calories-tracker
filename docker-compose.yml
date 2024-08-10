@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  api:
+    build: 
+      context: .
+      target: api
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./api:/app
+      - ./api/node_modules:/app/node_modules
+    networks: 
+      - calories-tracker
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://ct-admin:cdadevops2024@db:5432/calories-tracker-db
+    
+  frontend:
+    build: 
+      context: .
+      target: frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - ./frontend/node_modules:/app/node_modules
+    networks:
+      - calories-tracker
+    depends_on:
+      - api
+
+  db: 
+    image: postgres:16.0-alpine3.18
+    env_file:
+      - .env.local
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - calories-tracker
+
+networks: 
+  calories-tracker: 
+
+volumes:
+  db-data: 
