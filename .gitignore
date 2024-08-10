@@ -2,3 +2,6 @@
 node_modules
 .env
 .env.local
+docker-compose.override.yml
+Dockerfile.dkt
+ZscalerRootCertificate-2048-SHA256.crt

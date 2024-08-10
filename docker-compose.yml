@@ -16,6 +16,20 @@ services:
       - db
     environment:
       - DATABASE_URL=postgresql://ct-admin:cdadevops2024@db:5432/calories-tracker-db
+    
+  frontend:
+    build: 
+      context: .
+      target: frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - ./frontend/node_modules:/app/node_modules
+    networks:
+      - calories-tracker
+    depends_on:
+      - api
 
   db: 
     image: postgres:16.0-alpine3.18
