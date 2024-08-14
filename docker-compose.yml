@@ -33,8 +33,11 @@ services:
 
   db: 
     image: postgres:16.0-alpine3.18
-    env_file:
-      - .env.local
+    environment:
+      POSTGRES_HOST: localhost
+      POSTGRES_USER: ct-admin
+      POSTGRES_DATABASE: calories-tracker-db
+      POSTGRES_PASSWORD: cdadevops2024
     volumes:
       - db-data:/var/lib/postgresql/data
     ports:
