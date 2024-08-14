@@ -71,8 +71,8 @@ jobs:
         run: |
           echo "${{ secrets.VPS_SSH_KEY }}" | tr -d '\r' | ssh-add - > /dev/null
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p $VPS_SSH_PORT $VPS_USER@$VPS_HOST << 'EOF'
-            cd /path/to/your/app/
-            git pull origin main
+            cd /app
+            git pull origin develop
             docker-compose down
             docker-compose up -d --build
           EOF
