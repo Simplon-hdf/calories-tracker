@@ -1,0 +1,67 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Clean and build API
+        working-directory: ./api
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install --legacy-peer-deps || echo "Warnings during npm install"
+          npm run build
+      
+      - name: Install and build front-end
+        working-directory: ./front
+        run: |
+          npm install
+          npm run build
+
+      - name: Run tests
+        run: |
+          cd api && npm test
+          cd ../frontend && npm test
+
+      - name: Build Docker images
+        run: |
+          docker-compose -f docker-compose.yml build
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Deploy to VPS
+        if: github.ref == 'refs/heads/main'
+        env:
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          VPS_SSH_PORT: ${{ secrets.VPS_SSH_PORT }}
+        run: |
+          echo "${{ secrets.VPS_SSH_KEY }}" | tr -d '\r' | ssh-add - > /dev/null
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p $VPS_SSH_PORT $VPS_USER@$VPS_HOST << 'EOF'
+            cd /path/to/your/app/
+            git pull origin main
+            docker-compose down
+            docker-compose up -d --build
+          EOF
