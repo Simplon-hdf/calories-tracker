@@ -71,7 +71,6 @@ jobs:
           password: ${{ secrets.VPS_SSH_KEY }}
           script: |
             DEPLOY_DIR=~/calories-tracker
-            GITHUB_TOKEN=${{ secrets.GH_TOKEN }}
 
             cd $DEPLOY_DIR
             sudo git pull origin develop || exit 11
