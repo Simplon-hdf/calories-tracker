@@ -41,9 +41,20 @@ jobs:
           cd api && npm test
           cd ../frontend && npm test
 
-      - name: Build Docker images
+      # Étape pour installer Docker Compose
+      - name: Install Docker Compose
         run: |
-          docker-compose -f docker-compose.yml build
+          sudo apt-get update
+          sudo apt-get install -y curl
+          sudo curl -L "https://github.com/docker/compose/releases/download/v2.11.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+
+      # Étape pour arrêter les conteneurs existants, construire les images Docker et redémarrer les conteneurs
+      - name: Build and push Docker images
+        run: |
+          docker-compose down
+          docker-compose build
+          docker-compose up -d
 
   deploy:
     runs-on: ubuntu-latest
