@@ -73,14 +73,8 @@ jobs:
             DEPLOY_DIR=~/calories-tracker
             GITHUB_TOKEN=${{ secrets.GH_TOKEN }}
 
-            if [ ! -d $DEPLOY_DIR ]; then
-              mkdir -p $DEPLOY_DIR
-              git clone https://$GITHUB_TOKEN@github.com/Simplon-hdf/calories-tracker.git $DEPLOY_DIR || exit 10
-              cd "$DEPLOY_DIR"
-            else
-              cd $DEPLOY_DIR
-              sudo git pull origin develop || exit 11
-            fi
+            cd $DEPLOY_DIR
+            sudo git pull origin develop || exit 11
 
             sudo docker-compose down -v || exit 20
             sudo docker-compose up -d || exit 30
