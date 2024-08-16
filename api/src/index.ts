@@ -1,9 +1,13 @@
 import express, { Request, Response } from 'express';
+const productRoutes = require('../routes/routes');
+
 
 const app = express();
 const port = process.env.PORT || 3001;
 
 app.use(express.json());
+app.use('/api', productRoutes);
+
 
 app.get('/', async (req: Request, res: Response) => {
   res.send('Hello World!');
