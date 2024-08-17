@@ -73,22 +73,5 @@ jobs:
             cd calories-tracker
             sudo git pull origin develop || exit 11
 
-            sudo docker-compose down -v || exit 20
-            sudo docker-compose up -d || exit 30
-
-    # steps:
-    #   - name: Deploy to VPS
-    #     if: github.ref == 'refs/heads/develop'
-    #     env:
-    #       VPS_USER: ${{ secrets.VPS_USER }}
-    #       VPS_HOST: ${{ secrets.VPS_HOST }}
-    #       VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
-    #       VPS_SSH_PORT: ${{ secrets.VPS_PORT }}
-    #     run: |
-    #       echo "${{ secrets.VPS_SSH_KEY }}" | tr -d '\r' | ssh-add - > /dev/null
-    #       ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p $VPS_SSH_PORT $VPS_USER@$VPS_HOST << 'EOF'
-    #         cd /app
-    #         git pull origin develop
-    #         docker-compose down
-    #         docker-compose up -d --build
-    #       EOF
+            sudo docker compose down || exit 20
+            sudo docker compose up -d || exit 30
