@@ -65,10 +65,10 @@ jobs:
       - name: Deploy to VPS
         uses: appleboy/ssh-action@v0.1.8
         with:
-          host: "45.81.84.133"
+          host: 45.81.84.133
           port: 9033
-          username: "adminlocal"
-          password: "cdadevops2024"
+          username: adminlocal
+          password: cdadevops202
           # host: ${{ secrets.VPS_HOST }}
           # port: ${{ secrets.VPS_PORT }}
           # username: ${{ secrets.VPS_USER }}
