@@ -1,13 +1,17 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
+import cors from 'cors';
+import signupRoute from './routes/signup.js';
 
 const app = express();
 const port = process.env.PORT || 3001;
 
 app.use(express.json());
+app.use(cors({
+  origin: 'http://localhost:3000'
+}));
 
-app.get('/', async (req: Request, res: Response) => {
-  res.send('Hello World!');
-});
+// Utilisation de la route signup
+app.use('/api', signupRoute);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

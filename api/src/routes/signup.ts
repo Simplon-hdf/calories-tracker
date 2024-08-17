@@ -1,30 +1,33 @@
-import express from 'express';
+import { Router } from 'express';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
-const app = express();
+const router = Router();
 
-app.use(express.json());
+// Fonction pour détecter les balises HTML
+const containsHTML = (str: string) => {
+  const regex = /<[^>]*>/g;
+  return regex.test(str);
+};
 
-app.post('/signup', async (req, res) => {
+router.post('/signup', async (req, res) => {
   const { firstname, lastname, email, password } = req.body;
+
+    // Checking balises HTML in the fields
+    if (containsHTML(firstname) || containsHTML(lastname) || containsHTML(email) || containsHTML(password)) {
+      return res.status(400).json({ error: "Les balises HTML ne sont pas autorisées dans les champs" });
+    }
   
-  // Vérifie si l'utilisateur existe déjà
-  const existingUser = await prisma.person.findUnique({
-    where: { email }
-  });
-
-  if (existingUser) {
-    return res.status(400).json({ error: 'Email already in use' });
-  }
-
-  // Hash le mot de passe
-  const hashedPassword = await bcrypt.hash(password, 10);
-
   try {
-    // Crée l'utilisateur
+    const existingUser = await prisma.person.findUnique({ where: { email } });
+
+    if (existingUser) {
+      return res.status(400).json({ error: 'Email est déjà utilisé' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const newUser = await prisma.person.create({
       data: {
         firstname,
@@ -34,8 +37,10 @@ app.post('/signup', async (req, res) => {
       },
     });
 
-    res.status(201).json({ message: 'User created successfully', newUser });
+    res.status(201).json({ message: 'Utilisateur créé avec succès', newUser });
   } catch (error) {
-    res.status(500).json({ error: 'User creation failed' });
+    res.status(500).json({ error: "Echec de creation d'utilisateur" });
   }
 });
+
+export default router;

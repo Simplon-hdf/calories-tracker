@@ -1,22 +1,16 @@
-import express from 'express';
+import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
-const app = express();
-app.use(express.json());
-app.post('/signup', async (req, res) => {
+const router = Router();
+router.post('/signup', async (req, res) => {
     const { firstname, lastname, email, password } = req.body;
-    // Vérifie si l'utilisateur existe déjà
-    const existingUser = await prisma.person.findUnique({
-        where: { email }
-    });
-    if (existingUser) {
-        return res.status(400).json({ error: 'Email already in use' });
-    }
-    // Hash le mot de passe
-    const hashedPassword = await bcrypt.hash(password, 10);
     try {
-        // Crée l'utilisateur
+        const existingUser = await prisma.person.findUnique({ where: { email } });
+        if (existingUser) {
+            return res.status(400).json({ error: 'Email already in use' });
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = await prisma.person.create({
             data: {
                 firstname,
@@ -31,3 +25,4 @@ app.post('/signup', async (req, res) => {
         res.status(500).json({ error: 'User creation failed' });
     }
 });
+export default router;
