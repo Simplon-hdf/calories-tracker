@@ -65,18 +65,12 @@ jobs:
       - name: Deploy to VPS
         uses: appleboy/ssh-action@v0.1.8
         with:
-          host: 45.81.84.133
-          port: 9033
-          username: adminlocal
-          password: cdadevops2024
-          # host: ${{ secrets.VPS_HOST }}
-          # port: ${{ secrets.VPS_PORT }}
-          # username: ${{ secrets.VPS_USER }}
-          # password: ${{ secrets.VPS_SSH_KEY }}
+          host: ${{ secrets.VPS_HOST }}
+          port: ${{ secrets.VPS_PORT }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            DEPLOY_DIR=~/calories-tracker
-
-            cd $DEPLOY_DIR
+            cd calories-tracker
             sudo git pull origin develop || exit 11
 
             sudo docker-compose down -v || exit 20
