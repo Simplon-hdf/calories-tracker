@@ -68,7 +68,7 @@ jobs:
           host: 45.81.84.133
           port: 9033
           username: adminlocal
-          password: cdadevops202
+          password: cdadevops2024
           # host: ${{ secrets.VPS_HOST }}
           # port: ${{ secrets.VPS_PORT }}
           # username: ${{ secrets.VPS_USER }}
