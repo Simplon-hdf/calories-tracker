@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { signupUser } from '../../services/authService';
 import { SignupFormData } from '../../interfaces/types';
-// import "../../../public/css/styles";
+import { useAuth } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * Signup component for user registration
@@ -16,6 +17,15 @@ function Signup(): JSX.Element {
   });
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  // Redirect to dashboard if the user is already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/accueil'); // Redirect the user to the dashboard
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormSignup({

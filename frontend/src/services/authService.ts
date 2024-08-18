@@ -1,26 +1,45 @@
-import { SignupFormData } from "../interfaces/types";
+import { SignupFormData, LoginFormData } from "../interfaces/types";
+import { fetchJson } from "../utils/fetchJson";
+
+// Sign up service
 export const signupUser = async (formSignup: SignupFormData) => {
-    const response = await fetch('http://localhost:3001/api/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formSignup),
-    });
-    // Vérifier si le content type est JSON
-    const contentType = response.headers.get('Content-Type');
-    if (contentType && contentType.includes('application/json')) {
-      const data = await response.json();
-      if (response.ok) {
-        console.log('User created successfully:', data);
-        return data;
-      } else {
-        console.error('Error creating user:', data.message);
-        throw new Error(data.message || 'Error creating user');
-      }
-    } else {
-      console.error('Unexpected content type:', contentType);
-      throw new Error('Unexpected response from server');
-    }
-  };
-  
+  return await fetchJson('http://localhost:3001/api/signup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formSignup),
+  });
+};
+
+export interface LoginResponse {
+  token: string;
+}
+
+// Login service
+export const loginUser = async (formLogin: LoginFormData): Promise<LoginResponse> => {
+  return await fetchJson('http://localhost:3001/api/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formLogin),
+  });
+};
+
+// Fetch user profile service
+export const fetchUserProfile = async () => {
+  const response = await fetchJson('http://localhost:3001/api/profile', {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+
+  // Vérifier si la requête a échoué
+  if (!response.ok) {
+    throw new Error('Erreur lors de la récupération des informations de l\'utilisateur');
+  }
+
+  return await response.json();
+};

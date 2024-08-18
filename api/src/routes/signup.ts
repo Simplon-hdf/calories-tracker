@@ -5,7 +5,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 const router = Router();
 
-// Fonction pour détecter les balises HTML
+// Function to check balises HTML
 const containsHTML = (str: string) => {
   const regex = /<[^>]*>/g;
   return regex.test(str);
@@ -23,7 +23,7 @@ router.post('/signup', async (req, res) => {
     const existingUser = await prisma.person.findUnique({ where: { email } });
 
     if (existingUser) {
-      return res.status(400).json({ error: 'Email est déjà utilisé' });
+      return res.status(400).json({ error: 'Email est déjà utilisée' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);

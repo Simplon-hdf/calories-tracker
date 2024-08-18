@@ -15,5 +15,5 @@
         "isolatedModules": true,
         "jsx": "react"
     },
-    "include": ["src"]
+    "include": ["src", "../api/src/services/userService.ts"]
 }

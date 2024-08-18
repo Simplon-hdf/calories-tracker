@@ -14,20 +14,20 @@ form {
     align-items: center;
     gap: 10px;
 }
-.formSignup{
+.formSignup , .formLogin {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
+    margin:20px;
     background: white;
     border-radius: 10px;
     transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-   
     box-shadow: inset 0 -3em 3em rgba(0,0,0,0.1),
     0 0  0 2px rgb(190, 190, 190),
     0.3em 0.3em 1em rgba(0,0,0,0.3);
 }
-.formSignup input {
+.formSignup input, .formLogin input{
     margin: 0 10px;
     border: none;
     border-bottom: 1px solid #515151;
@@ -45,11 +45,9 @@ form {
     padding: 10px;
   }
 
-  #buttonSignup {
+  #buttonSignup, #buttonLogin, #buttonLogout {
     position: relative;
     width: fit-content;
-    border: 2px solid #0071e3;
-    background-color: #0071e3;
     height: 30px;
     padding: 0 10px;
     color: white;
@@ -61,8 +59,17 @@ form {
     cursor: pointer;
     overflow: hidden;
   }
-  
-  #buttonSignup::after {
+  #buttonSignup, #buttonLogin {
+    border: 2px solid #0071e3;
+    background-color: #0071e3;
+  }
+
+  #buttonLogout {
+    border: 2px solid #00478d;
+    background-color: #00478d;
+  }
+
+  #buttonSignup::after, #buttonLogin::after, #buttonLogout::after {
     content: "";
     position: absolute;
     background-color: rgba(255, 255, 255, 0.253);
@@ -76,8 +83,19 @@ form {
     transition-duration: .5s;
   }
   
-  #buttonSignup:hover::after {
+  #buttonSignup:hover::after, #buttonLogin:hover::after , #buttonLogout:hover::after {
     transform: translateX(600px);
     transition-duration: .5s;
   }
   
+  .dashboard{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+  }
+
+  .info-name {
+    text-transform: uppercase;
+    font-weight: 600;
+}
