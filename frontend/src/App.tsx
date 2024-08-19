@@ -14,8 +14,8 @@ const App: React.FC = () => {
       <AuthProvider>
         <Router>
           <Routes>
-            <Route path="/connexion" element={<Login />} />
-            <Route path="/" element={<Signup />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/inscription" element={<Signup />} />
             <Route path="/accueil" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           </Routes>
         </Router>

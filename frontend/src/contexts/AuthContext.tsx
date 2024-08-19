@@ -23,7 +23,7 @@ export const useAuth = () => {
     const logout = () => {
       localStorage.removeItem('token');
       setIsAuthenticated(false);
-      window.location.href = '/connexion';
+      window.location.href = '/';
     };
   
     return (

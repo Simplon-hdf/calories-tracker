@@ -40,12 +40,8 @@ export interface LoginResponse {
   };
 }
 
-// types.ts (ou dans un autre fichier de types)
-
-import { Request } from 'express';
-
 declare module 'express-serve-static-core' {
   interface Request {
-    userId?: number; // ou number, selon votre besoin
+    userId?: number;
   }
 }

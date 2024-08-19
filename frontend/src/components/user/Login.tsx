@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { loginUser } from '../../services/authService';
 import { LoginFormData } from '../../interfaces/types';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
 
 /**
@@ -48,6 +48,7 @@ function Login(): JSX.Element {
     try {
       const data = await loginUser(sanitizedFormLogin);
       localStorage.setItem('token', data.token);  // Assuming data contains a token
+      console.log(data);
       setUser(data.user);
       setSuccess('Vous vous êtes connecté(e) avec succès!');
       setError(null); // Clear any previous error
@@ -81,6 +82,9 @@ function Login(): JSX.Element {
           value={formLogin.password}
           onChange={handleChange}
         />
+        <Link to="/inscription" className='link-signup'>
+          Pas encore inscrit? <span>Clique <i>ici</i></span>
+        </Link>
         <button id="buttonLogin" type="submit">Connexion</button>
       </form>
     </div>

@@ -1,101 +1,131 @@
 div#root {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
-    background-color: #fffaf3;
-    font-family: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: #fffaf3;
+  font-family: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
-.formSignup , .formLogin {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin:20px;
-    background: white;
-    border-radius: 10px;
-    transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: inset 0 -3em 3em rgba(0,0,0,0.1),
-    0 0  0 2px rgb(190, 190, 190),
-    0.3em 0.3em 1em rgba(0,0,0,0.3);
+
+.formSignup,
+.formLogin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 20px;
+  background: white;
+  border-radius: 10px;
+  transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1),
+    0 0 0 2px rgb(190, 190, 190),
+    0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
 }
-.formSignup input, .formLogin input{
-    margin: 0 10px;
-    border: none;
-    border-bottom: 1px solid #515151;
-    padding: 10px;
+
+.formSignup input,
+.formLogin input {
+  margin: 0 10px;
+  border: none;
+  border-bottom: 1px solid #515151;
+  padding: 10px;
 }
+
 .heading {
-    font-size: 2.5em;
-    color: #2e2e2e;
-    /* font-weight: 700; */
-    /* margin: 15px 0 30px 0; */
-    font-size: 32px;
-    line-height: 0.15;
-    font-weight: 600;
-    /* letter-spacing: .004em; */
-    padding: 10px;
-  }
+  font-size: 2.5em;
+  color: #2e2e2e;
+  /* font-weight: 700; */
+  /* margin: 15px 0 30px 0; */
+  font-size: 32px;
+  line-height: 0.15;
+  font-weight: 600;
+  /* letter-spacing: .004em; */
+  padding: 10px;
+}
 
-  #buttonSignup, #buttonLogin, #buttonLogout {
-    position: relative;
-    width: fit-content;
-    height: 30px;
-    padding: 0 10px;
-    color: white;
-    font-size: .8em;
-    font-weight: 500;
-    letter-spacing: 1px;
-    border-radius: 30px;
-    margin: 15px;
-    cursor: pointer;
-    overflow: hidden;
-  }
-  #buttonSignup, #buttonLogin {
-    border: 2px solid #0071e3;
-    background-color: #0071e3;
-  }
+#buttonSignup,
+#buttonLogin,
+#buttonLogout {
+  position: relative;
+  width: fit-content;
+  height: 30px;
+  padding: 0 10px;
+  color: white;
+  font-size: .8em;
+  font-weight: 500;
+  letter-spacing: 1px;
+  border-radius: 30px;
+  margin: 15px;
+  cursor: pointer;
+  overflow: hidden;
+}
 
-  #buttonLogout {
-    border: 2px solid #00478d;
-    background-color: #00478d;
-  }
+#buttonSignup,
+#buttonLogin {
+  border: 2px solid #0071e3;
+  background-color: #0071e3;
+}
 
-  #buttonSignup::after, #buttonLogin::after, #buttonLogout::after {
-    content: "";
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.253);
-    height: 100%;
-    width: 150px;
-    top: 0;
-    left: -200px;
-    border-bottom-right-radius: 100px;
-    border-top-left-radius: 100px;
-    filter: blur(10px);
-    transition-duration: .5s;
-  }
-  
-  #buttonSignup:hover::after, #buttonLogin:hover::after , #buttonLogout:hover::after {
-    transform: translateX(600px);
-    transition-duration: .5s;
-  }
-  
-  .dashboard{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px;
-  }
+#buttonLogout {
+  border: 2px solid #00478d;
+  background-color: #00478d;
+}
 
-  .info-name {
-    text-transform: uppercase;
-    font-weight: 600;
+#buttonSignup::after,
+#buttonLogin::after,
+#buttonLogout::after {
+  content: "";
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.253);
+  height: 100%;
+  width: 150px;
+  top: 0;
+  left: -200px;
+  border-bottom-right-radius: 100px;
+  border-top-left-radius: 100px;
+  filter: blur(10px);
+  transition-duration: .5s;
+}
+
+#buttonSignup:hover::after,
+#buttonLogin:hover::after,
+#buttonLogout:hover::after {
+  transform: translateX(600px);
+  transition-duration: .5s;
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.info-name {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+a.link-signup {
+  margin: 10px 0 0 10px;
+  font-size: 11px;
+  color: #ababab;
+  text-decoration: none;
+  align-self: start;
+}
+
+.link-signup>span {
+  font-style: italic;
+}
+
+.link-signup>span>i {
+  color: #0071e3;
+  text-decoration: underline;
 }
