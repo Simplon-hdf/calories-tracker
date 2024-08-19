@@ -9,7 +9,6 @@ services:
       - "3001:3001"
     volumes:
       - ./api:/app
-      - ./api/node_modules:/app/node_modules
     networks: 
       - calories-tracker
     depends_on:
@@ -25,7 +24,6 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend:/app
-      - ./frontend/node_modules:/app/node_modules
     networks:
       - calories-tracker
     depends_on:
