@@ -62,6 +62,9 @@ function Signup(): JSX.Element {
       await signupUser(sanitizedFormSignup);
       setSuccess('Vous vous êtes incrit(e) avec succès!');
       setError(null); // Clear any previous error
+      setTimeout(() => {
+        navigate('/'); // Redirect to the login page
+      }, 1000); 
       setFormSignup({ firstname: '', lastname: '', email: '', password: '' }); // Reset the form
     } catch (error) {
       console.error("Une erreur durant l'inscription:", error);

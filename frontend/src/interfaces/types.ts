@@ -39,9 +39,3 @@ export interface LoginResponse {
     email: string;
   };
 }
-
-declare module 'express-serve-static-core' {
-  interface Request {
-    userId?: number;
-  }
-}

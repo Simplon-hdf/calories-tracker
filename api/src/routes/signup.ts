@@ -1,6 +1,7 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { PrismaClient } from '@prisma/client';
+import { SignupRequestBody } from '../interfaces/types';
 
 const prisma = new PrismaClient();
 const router = Router();
@@ -11,14 +12,19 @@ const containsHTML = (str: string) => {
   return regex.test(str);
 };
 
-router.post('/signup', async (req, res) => {
+// Function to capitalize the first letter of a string
+const capitalize = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
+router.post('/signup', async (req: Request<{}, {}, SignupRequestBody>, res: Response) => {
   const { firstname, lastname, email, password } = req.body;
 
-    // Checking balises HTML in the fields
-    if (containsHTML(firstname) || containsHTML(lastname) || containsHTML(email) || containsHTML(password)) {
-      return res.status(400).json({ error: "Les balises HTML ne sont pas autorisées dans les champs" });
-    }
-  
+  // Checking balises HTML in the fields
+  if (containsHTML(firstname) || containsHTML(lastname) || containsHTML(email) || containsHTML(password)) {
+    return res.status(400).json({ error: "Les balises HTML ne sont pas autorisées dans les champs" });
+  }
+
   try {
     const existingUser = await prisma.person.findUnique({ where: { email } });
 
@@ -30,9 +36,9 @@ router.post('/signup', async (req, res) => {
 
     const newUser = await prisma.person.create({
       data: {
-        firstname,
-        lastname,
-        email,
+        firstname:capitalize(firstname),
+        lastname:capitalize(lastname),
+        email:email.toLowerCase(),
         password: hashedPassword,
       },
     });

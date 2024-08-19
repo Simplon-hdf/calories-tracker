@@ -8,6 +8,10 @@ const containsHTML = (str) => {
     const regex = /<[^>]*>/g;
     return regex.test(str);
 };
+// Function to capitalize the first letter of a string
+const capitalize = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
 router.post('/signup', async (req, res) => {
     const { firstname, lastname, email, password } = req.body;
     // Checking balises HTML in the fields
@@ -22,9 +26,9 @@ router.post('/signup', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = await prisma.person.create({
             data: {
-                firstname,
-                lastname,
-                email,
+                firstname: capitalize(firstname),
+                lastname: capitalize(lastname),
+                email: email.toLowerCase(),
                 password: hashedPassword,
             },
         });
