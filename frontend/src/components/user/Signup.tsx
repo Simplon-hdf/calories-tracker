@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { signupUser } from '../../services/authService';
 import { SignupFormData } from '../../interfaces/types';
 import { useAuth } from '../../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 /**
  * Signup component for user registration
@@ -102,6 +102,9 @@ function Signup(): JSX.Element {
           value={formSignup.password}
           onChange={handleChange}
         />
+        <Link to="/" className='link-login'>
+          Déjà inscrit? <span>Clique <i>ici</i></span>
+        </Link>
         <button id="buttonSignup" type="submit">Soumettre</button>
       </form>
     </div>

@@ -113,7 +113,7 @@ form {
   font-weight: 600;
 }
 
-a.link-signup {
+a.link-signup, a.link-login {
   margin: 10px 0 0 10px;
   font-size: 11px;
   color: #ababab;
@@ -121,11 +121,11 @@ a.link-signup {
   align-self: start;
 }
 
-.link-signup>span {
+.link-signup>span,.link-login>span {
   font-style: italic;
 }
 
-.link-signup>span>i {
+.link-signup>span>i,.link-login>span>i {
   color: #0071e3;
   text-decoration: underline;
 }
