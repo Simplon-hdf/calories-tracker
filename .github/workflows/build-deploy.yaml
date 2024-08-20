@@ -59,7 +59,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: testing
-    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    if: always() # For FIDEL testing
+    # if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
 
     steps:
       - name: Checkout code
