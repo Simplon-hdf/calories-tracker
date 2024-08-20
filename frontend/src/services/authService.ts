@@ -1,9 +1,11 @@
 import { SignupFormData, LoginFormData, LoginResponse } from "../interfaces/types";
 import { fetchJson } from "../utils/fetchJson";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001';
+
 // Sign up service
 export const signupUser = async (formSignup: SignupFormData) => {
-  return await fetchJson('http://localhost:3001/api/signup', {
+  return await fetchJson(`${backendUrl}/api/signup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -16,7 +18,7 @@ export const signupUser = async (formSignup: SignupFormData) => {
 
 // Login service
 export const loginUser = async (formLogin: LoginFormData): Promise<LoginResponse> => {
-  const data = await fetchJson('http://localhost:3001/api/login', {
+  const data = await fetchJson(`${backendUrl}/api/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -32,7 +34,7 @@ export const loginUser = async (formLogin: LoginFormData): Promise<LoginResponse
 
 // Fetch user profile service
 export const fetchUserProfile = async () => {
-  const response = await fetchJson('http://localhost:3001/api/profile', {
+  const response = await fetchJson(`${backendUrl}/api/profile`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('token')}`,
