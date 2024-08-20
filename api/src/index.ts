@@ -1,12 +1,12 @@
 import express, { Request, Response } from 'express';
-const productRoutes = require('../routes/routes');
+import productRoute from './routes/product';
 
 
 const app = express();
 const port = process.env.PORT || 3001;
 
 app.use(express.json());
-app.use('/api', productRoutes);
+app.use('/api', productRoute);
 
 
 app.get('/', async (req: Request, res: Response) => {
