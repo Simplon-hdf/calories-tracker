@@ -52,10 +52,9 @@ jobs:
       # Étape pour arrêter les conteneurs existants, construire les images Docker et redémarrer les conteneurs
       - name: Build and push Docker images
         run: |
-          docker compose -f docker-compose.yml -f docker-compose.override.yml down
-          docker compose -f docker-compose.yml -f docker-compose.override.yml build --no-cache
-          docker compose -f docker-compose.yml -f docker-compose.override.yml up -d
-
+          docker compose down
+          docker compose build --no-cache 
+          docker compose up -d
 
   deploy:
     runs-on: ubuntu-latest
