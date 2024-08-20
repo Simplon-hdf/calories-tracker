@@ -19,7 +19,7 @@ services:
     build: 
       context: ./frontend
     ports:
-      - "8080:3000"
+      - "9013:3000"
     volumes:
       - ./frontend:/app
     networks:
