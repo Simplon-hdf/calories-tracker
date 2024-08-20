@@ -59,7 +59,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: testing
-    if: always()
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -86,22 +87,3 @@ jobs:
             sudo docker compose build --no-cache || exit 10
             sudo docker compose down || exit 20
             sudo docker compose up -d || exit 30
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-
-  #   steps:
-  #     # Étape pour déployer l'application sur un VPS via SSH
-  #     - name: Deploy to VPS
-  #       uses: appleboy/ssh-action@v0.1.8
-  #       with:
-  #         host: ${{ secrets.VPS_HOST }}
-  #         port: ${{ secrets.VPS_PORT }}
-  #         username: ${{ secrets.VPS_USER }}
-  #         password: ${{ secrets.VPS_SSH_KEY }}
-  #         script: |
-  #           cd calories-tracker
-  #           sudo git pull origin develop || exit 11
-
-  #           sudo docker compose down || exit 20
-  #           sudo docker compose up -d || exit 30
