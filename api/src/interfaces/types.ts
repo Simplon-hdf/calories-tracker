@@ -7,9 +7,9 @@ export interface SignupRequestBody {
     password: string;
 };
 
-
-declare module 'express-serve-static-core' {
-    interface Request {
-        userId?: number;
-    }
-}
+// // Extend the Request interface to add userId
+// declare module 'express-serve-static-core' {
+//     export interface Request {
+//         userId?: number;
+//     }
+// }

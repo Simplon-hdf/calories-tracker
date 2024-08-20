@@ -63,30 +63,32 @@ function Login(): JSX.Element {
 
 
   return (
-    <div className='formLogin'>
-      <p className="heading">Connexion</p>
-      <form onSubmit={handleSubmit}>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        {success && <p style={{ color: 'green' }}>{success}</p>}
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formLogin.email}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Mot de passe"
-          value={formLogin.password}
-          onChange={handleChange}
-        />
-        <Link to="/inscription" className='link-signup'>
-          Pas encore inscrit? <span>Clique <i>ici</i></span>
-        </Link>
-        <button id="buttonLogin" type="submit">Connexion</button>
-      </form>
+    <div className='container-form'>
+      <div className='formLogin'>
+        <p className="heading">Connexion</p>
+        <form onSubmit={handleSubmit}>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {success && <p style={{ color: 'green' }}>{success}</p>}
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formLogin.email}
+            onChange={handleChange}
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Mot de passe"
+            value={formLogin.password}
+            onChange={handleChange}
+          />
+          <Link to="/inscription" className='link-signup'>
+            Pas encore inscrit? <span>Clique <i>ici</i></span>
+          </Link>
+          <button id="buttonLogin" type="submit">Connexion</button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -64,7 +64,7 @@ function Signup(): JSX.Element {
       setError(null); // Clear any previous error
       setTimeout(() => {
         navigate('/'); // Redirect to the login page
-      }, 1000); 
+      }, 1000);
       setFormSignup({ firstname: '', lastname: '', email: '', password: '' }); // Reset the form
     } catch (error) {
       console.error("Une erreur durant l'inscription:", error);
@@ -72,44 +72,46 @@ function Signup(): JSX.Element {
     }
   };
   return (
-    <div className='formSignup'>
-      <p className="heading">Inscription</p>
-      <form onSubmit={handleSubmit}>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        {success && <p style={{ color: 'green' }}>{success}</p>}
-        <input
-          type="text"
-          name="firstname"
-          placeholder="Prenom"
-          value={formSignup.firstname}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="lastname"
-          placeholder="Nom"
-          value={formSignup.lastname}
-          onChange={handleChange}
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formSignup.email}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Mot de passe"
-          value={formSignup.password}
-          onChange={handleChange}
-        />
-        <Link to="/" className='link-login'>
-          Déjà inscrit? <span>Clique <i>ici</i></span>
-        </Link>
-        <button id="buttonSignup" type="submit">Soumettre</button>
-      </form>
+    <div className='container-form'>
+      <div className='formSignup'>
+        <p className="heading">Inscription</p>
+        <form onSubmit={handleSubmit}>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {success && <p style={{ color: 'green' }}>{success}</p>}
+          <input
+            type="text"
+            name="firstname"
+            placeholder="Prenom"
+            value={formSignup.firstname}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="lastname"
+            placeholder="Nom"
+            value={formSignup.lastname}
+            onChange={handleChange}
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formSignup.email}
+            onChange={handleChange}
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Mot de passe"
+            value={formSignup.password}
+            onChange={handleChange}
+          />
+          <Link to="/" className='link-login'>
+            Déjà inscrit? <span>Clique <i>ici</i></span>
+          </Link>
+          <button id="buttonSignup" type="submit">Soumettre</button>
+        </form>
+      </div>
     </div>
   );
 }

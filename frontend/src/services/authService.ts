@@ -1,4 +1,4 @@
-import { SignupFormData, LoginFormData } from "../interfaces/types";
+import { SignupFormData, LoginFormData, LoginResponse } from "../interfaces/types";
 import { fetchJson } from "../utils/fetchJson";
 
 // Sign up service
@@ -12,19 +12,22 @@ export const signupUser = async (formSignup: SignupFormData) => {
   });
 };
 
-export interface LoginResponse {
-  token: string;
-}
+
 
 // Login service
 export const loginUser = async (formLogin: LoginFormData): Promise<LoginResponse> => {
-  return await fetchJson('http://localhost:3001/api/login', {
+  const data = await fetchJson('http://localhost:3001/api/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(formLogin),
   });
+  localStorage.setItem('token', data.token);
+  localStorage.setItem('userFirstName', data.user.firstname);
+  localStorage.setItem('userLastName', data.user.lastname);
+  localStorage.setItem('userEmail', data.user.email);
+  return data;
 };
 
 // Fetch user profile service

@@ -15,7 +15,12 @@ export const useUser = () => {
 };
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [user, setUser] = useState<{ firstname: string, lastname: string } | null>(null);
+    const [user, setUser] = useState<{ firstname: string, lastname: string, email: string } | null>(() => {
+        const firstname = localStorage.getItem('userFirstName');
+        const lastname = localStorage.getItem('userLastName');
+        const email = localStorage.getItem('userEmail');
+        return firstname && lastname && email ? { firstname, lastname , email} : null;
+    });
 
     useEffect(() => {
         // Recover user information after login
@@ -36,6 +41,9 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const logout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('userFirstName');
+        localStorage.removeItem('userLastName');
+        localStorage.removeItem('userEmail');
         setUser(null);
         window.location.href = '/';
     };

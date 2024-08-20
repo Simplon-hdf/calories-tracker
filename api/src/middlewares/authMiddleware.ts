@@ -1,24 +1,32 @@
 // import { Request, Response, NextFunction } from 'express';
 // import jwt from 'jsonwebtoken';
+// import dotenv from 'dotenv';
+// import '../interfaces/types';
 
-// interface AuthRequest extends Request {
-//   userId?: number; // Déclarez que userId peut être ajouté au request
-// }
+// // Load environment variables from the .env file
+// dotenv.config();
 
-// export const authMiddleware = (req: AuthRequest, res: Response, next: NextFunction) => {
-//   const authHeader = req.headers.authorization;
+// // Authentification middleware
+// const authmiddleware = (req: Request, res: Response, next: NextFunction) => {
+//     // Retrieving the token from the request headers
+//     const authHeader = req.headers.authorization;
 
-//   if (!authHeader) {
-//     return res.status(401).json({ error: 'No token provided' });
-//   }
+//     if (!authHeader) {
+//         return res.status(401).json({ error: 'Accès refusé, aucun token fourni.' });
+//     }
+//     // The token is generally sent in the "Bearer <token>" format.
+//     const token = authHeader.split(' ')[1];
+//     try {
+//         // Checking et décryptage du token
+//         const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { userId: number };
 
-//   const token = authHeader.split(' ')[1];
-
-//   try {
-//     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { userId: number };
-//     req.userId = decoded.userId; // Assignez l'userId décodé au req
-//     next();
-//   } catch (error) {
-//     res.status(401).json({ error: 'Invalid token' });
-//   }
+//         // Add the user ID to the request object
+//         req.userId = decoded.userId;
+//         // Move on to the next middleware or route
+//         next();
+//     } catch (err) {
+//         return res.status(401).json({ error: 'Token invalide.' });
+//     }
 // };
+
+// export default authmiddleware

@@ -3,7 +3,8 @@ import cors from 'cors';
 import signupRoute from './routes/signup.js';
 import loginRoute from './routes/login.js';
 import dotenv from 'dotenv';
-// import personRoute from './routes/profile.js'
+// import profileRoute from './routes/profile.js'
+// import authMiddleware from './middlewares/authmiddleware.js';
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3001;
@@ -15,8 +16,8 @@ app.use(cors({
 app.use('/api', signupRoute);
 // Utilisation de la route login
 app.use('/api', loginRoute);
-// Utilisation de la route person
-// app.use('/api', personRoute);
+// Utilisation de la route profile
+// app.use('/api', authMiddleware, profileRoute);
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });

@@ -26,7 +26,7 @@ export interface AuthProviderProps {
 // Type definition for the user context
 export interface UserContextType {
   user: { firstname: string, lastname: string } | null;
-  setUser: React.Dispatch<React.SetStateAction<{ firstname: string, lastname: string } | null>>;
+  setUser: React.Dispatch<React.SetStateAction<{ firstname: string, lastname: string, email:string } | null>>;
   logout: () => void;
 }
 
@@ -38,4 +38,9 @@ export interface LoginResponse {
     lastname: string;
     email: string;
   };
+}
+
+export interface ProgramProps {
+  title: string; 
+  paragraph: string;
 }
