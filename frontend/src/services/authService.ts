@@ -1,7 +1,7 @@
 import { SignupFormData, LoginFormData, LoginResponse } from "../interfaces/types";
 import { fetchJson } from "../utils/fetchJson";
 
-const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001';
+const backendUrl = process.env.BACKEND_URL || 'http://localhost:3001';
 
 // Sign up service
 export const signupUser = async (formSignup: SignupFormData) => {

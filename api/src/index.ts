@@ -7,9 +7,10 @@ import dotenv from 'dotenv';
 // import authMiddleware from './middlewares/authmiddleware.js';
 
 dotenv.config();
+console.log('Bonjour');
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = parseInt(process.env.PORT || '3001', 10);
 const adressIP = process.env.IP || 'localhost';
 
 // Configure the authorised origin for CORS
