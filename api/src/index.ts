@@ -11,7 +11,7 @@ console.log('Bonjour');
 
 const app = express();
 const port = parseInt(process.env.PORT || '3001', 10);
-const adressIP = process.env.IP || 'localhost';
+const ip = process.env.IP || 'localhost';
 
 // Configure the authorised origin for CORS
 const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:3000';
@@ -28,6 +28,6 @@ app.use('/api', loginRoute);
 // Utilisation de la route profile
 // app.use('/api', authMiddleware, profileRoute);
 
-app.listen(port, adressIP, () => {
-  console.log(`Server running on http://${adressIP}:${port}`);
+app.listen(port, ip, () => {
+  console.log(`Server running on http://${ip}:${port}`);
 });
