@@ -5,6 +5,24 @@ export interface SignupFormData {
   lastname: string;
   email: string;
   password: string;
+  phone: string;
+  weight: string;
+  height: string;
+  gender: string;
+  address: string;
+  city: string;
+  zip_code: string
+}
+
+export interface AddressSuggestion {
+  properties: {
+    label: string;
+    housenumber?: string;
+    street?: string;
+    postcode: string;
+    city: string;
+    context?: string;
+  };
 }
 
 export interface LoginFormData {
@@ -26,7 +44,7 @@ export interface AuthProviderProps {
 // Type definition for the user context
 export interface UserContextType {
   user: { firstname: string, lastname: string } | null;
-  setUser: React.Dispatch<React.SetStateAction<{ firstname: string, lastname: string, email:string } | null>>;
+  setUser: React.Dispatch<React.SetStateAction<{ firstname: string, lastname: string, email: string } | null>>;
   logout: () => void;
 }
 
@@ -41,6 +59,6 @@ export interface LoginResponse {
 }
 
 export interface ProgramProps {
-  title: string; 
+  title: string;
   paragraph: string;
 }

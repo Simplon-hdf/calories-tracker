@@ -13,7 +13,7 @@ CREATE TABLE "Product" (
 );
 
 -- CreateTable
-CREATE TABLE "Product_Categorie" (
+CREATE TABLE "Product_Categories" (
     "id_product_category" SERIAL NOT NULL,
     "name" VARCHAR(50) NOT NULL,
 

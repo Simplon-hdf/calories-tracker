@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { signupUser } from '../../services/authService';
-import { SignupFormData } from '../../interfaces/types';
+import { SignupFormData, AddressSuggestion } from '../../interfaces/types';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 /**
  * Signup component for user registration
@@ -14,7 +15,39 @@ function Signup(): JSX.Element {
     lastname: '',
     email: '',
     password: '',
+    phone: '',
+    weight: '',
+    height: '',
+    gender: '',
+    address: '',
+    city:'',
+    zip_code:''
   });
+
+  const [addressSuggestions, setAddressSuggestions] = useState<AddressSuggestion[]>([]);
+  const fetchAddressSuggestions = async (query: string) => {
+    try {
+      const response = await axios.get(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(query)}&limit=5`);
+      const suggestions: AddressSuggestion[] = response.data.features;
+      setAddressSuggestions(suggestions);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des suggestions d'adresse:", error);
+    }
+  };
+
+  const handleAddressSelect = (selectedAddress: AddressSuggestion) => {
+    const { housenumber, street, postcode, city } = selectedAddress.properties;
+    
+    setFormSignup({
+      ...formSignup,
+      address: `${housenumber ? housenumber + ' ' : ''}${street}`, // Combinaison du numéro de maison et du nom de la rue
+      city: city, // La ville
+      zip_code: postcode, // Le code postal
+    });
+    
+    setAddressSuggestions([]); // Effacer les suggestions après la sélection
+  };
+
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
@@ -28,10 +61,14 @@ function Signup(): JSX.Element {
   }, [isAuthenticated, navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
     setFormSignup({
       ...formSignup,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
+    if (name === 'address' && value.length > 3) {
+      fetchAddressSuggestions(value);
+    }
   };
   const sanitizeInput = (value: string) => {
     const element = document.createElement('div');
@@ -41,7 +78,19 @@ function Signup(): JSX.Element {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Basic client-side validation
-    if (!formSignup.firstname || !formSignup.lastname || !formSignup.email || !formSignup.password) {
+    if (
+      !formSignup.firstname ||
+      !formSignup.lastname ||
+      !formSignup.email ||
+      !formSignup.password ||
+      !formSignup.phone ||
+      !formSignup.weight ||
+      !formSignup.height ||
+      !formSignup.gender ||
+      !formSignup.address ||
+      !formSignup.city ||
+      !formSignup.zip_code
+    ) {
       setError('Tous les champs sont requis !');
       return;
     }
@@ -57,6 +106,14 @@ function Signup(): JSX.Element {
       lastname: sanitizeInput(formSignup.lastname),
       email: sanitizeInput(formSignup.email),
       password: sanitizeInput(formSignup.password),
+      phone: sanitizeInput(formSignup.phone),
+      weight: sanitizeInput(formSignup.weight),
+      height: sanitizeInput(formSignup.height),
+      gender: sanitizeInput(formSignup.gender),
+      address: sanitizeInput(formSignup.address),
+      city: sanitizeInput(formSignup.city),
+      zip_code: sanitizeInput(formSignup.zip_code),
+
     };
     try {
       await signupUser(sanitizedFormSignup);
@@ -65,7 +122,7 @@ function Signup(): JSX.Element {
       setTimeout(() => {
         navigate('/'); // Redirect to the login page
       }, 1000);
-      setFormSignup({ firstname: '', lastname: '', email: '', password: '' }); // Reset the form
+      setFormSignup({ firstname: '', lastname: '', email: '', password: '', phone: '', weight: '', height: '', gender: '', address: '',city: '', zip_code: '' }); // Reset the form
     } catch (error) {
       console.error("Une erreur durant l'inscription:", error);
       setError("Echec d'inscription");
@@ -81,7 +138,7 @@ function Signup(): JSX.Element {
           <input
             type="text"
             name="firstname"
-            placeholder="Prenom"
+            placeholder="Prénom"
             value={formSignup.firstname}
             onChange={handleChange}
           />
@@ -106,6 +163,63 @@ function Signup(): JSX.Element {
             value={formSignup.password}
             onChange={handleChange}
           />
+          <input
+            type="text"
+            name="phone"
+            placeholder="Téléphone"
+            value={formSignup.phone}
+            onChange={handleChange}
+          />
+          <input
+            type="number"
+            name="weight"
+            placeholder="Masse en (kg)"
+            value={formSignup.weight}
+            onChange={handleChange}
+          />
+          <input
+            type="number"
+            name="height"
+            placeholder="Taille (cm)"
+            value={formSignup.height}
+            onChange={handleChange}
+          />
+          <div className='container-label'>
+            <label>
+              <input
+                type="radio"
+                name="gender"
+                value="masculin"
+                checked={formSignup.gender === 'masculin'}
+                onChange={handleChange}
+              /> Homme
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="gender"
+                value="feminin"
+                checked={formSignup.gender === 'feminin'}
+                onChange={handleChange}
+              /> Femme
+            </label>
+          </div>
+          <input
+            type="text"
+            name="address"
+            placeholder="Adresse"
+            value={formSignup.address}
+            onChange={handleChange}
+          />
+          {addressSuggestions.length > 0 && (
+            <ul className="address-suggestions">
+              {addressSuggestions.map((suggestion, index) => (
+                <li key={index} onClick={() => handleAddressSelect(suggestion)}>
+                  {suggestion.properties.label}
+                </li>
+              ))}
+            </ul>
+          )}
           <Link to="/" className='link-login'>
             Déjà inscrit? <span>Clique <i>ici</i></span>
           </Link>

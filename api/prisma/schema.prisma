@@ -29,7 +29,7 @@ model Product {
   Customer_Product Customer_Product[]
 }
 
-model Product_Categorie {
+model Product_Categories {
   id_product_category Int                   @id @default(autoincrement()) @map("id_product_category")
   name                String                @unique @db.VarChar(50)
   Product_Category_Product Product_Category_Product[]
@@ -122,7 +122,7 @@ model Product_Category_Product {
   id_product          Int
   id_product_category Int
   Product             Product            @relation(fields: [id_product], references: [id_product])
-  Product_Categorie   Product_Categorie  @relation(fields: [id_product_category], references: [id_product_category])
+  Product_Categories   Product_Categories  @relation(fields: [id_product_category], references: [id_product_category])
 
   @@id([id_product, id_product_category])
 }

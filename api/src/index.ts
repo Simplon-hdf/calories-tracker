@@ -3,6 +3,7 @@ import cors from 'cors';
 import signupRoute from './routes/signup.js';
 import loginRoute from './routes/login.js';
 import dotenv from 'dotenv';
+import customerRoutes from './routes/customerRoutes.js';
 // import profileRoute from './routes/profile.js'
 // import authMiddleware from './middlewares/authmiddleware.js';
 
@@ -25,9 +26,9 @@ app.use(cors({
 app.use('/api', signupRoute);
 // Utilisation de la route login
 app.use('/api', loginRoute);
-// Utilisation de la route profile
-// app.use('/api', authMiddleware, profileRoute);
+// Utilisation de la route for Persons
+app.use('/api',  customerRoutes);
 
 app.listen(port, ip, () => {
-  console.log(`Server running on http://${ip}:${port}`);
+  console.log(`Server en cours d'exécution sur http://${ip}:${port}`);
 });

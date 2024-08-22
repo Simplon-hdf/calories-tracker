@@ -14,8 +14,6 @@ export const signupUser = async (formSignup: SignupFormData) => {
   });
 };
 
-
-
 // Login service
 export const loginUser = async (formLogin: LoginFormData): Promise<LoginResponse> => {
   const data = await fetchJson(`${backendUrl}/api/login`, {
