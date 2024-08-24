@@ -4,7 +4,7 @@ import "../public/css/styles.css";
 import Login from './components/authentification/Login';
 import PrivateRoute from './components/PrivateRoute';
 import Dashboard from './components/dashboard/Dashboard';
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { UserProvider } from './contexts/UserContext';
 
@@ -21,7 +21,7 @@ const App: React.FC = () => {
                 <Dashboard />
               </PrivateRoute>}
             />
-            {/* <Route path="/objectifs" element={<Objectives />}></Route> */}
+            {/* <Route path="/objectifs" element={<Target />}></Route> */}
           </Routes>
         </Router>
       </AuthProvider>

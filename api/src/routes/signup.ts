@@ -18,10 +18,10 @@ const capitalize = (str: string) => {
 };
 
 router.post('/signup', async (req: Request<{}, {}, SignupRequestBody>, res: Response) => {
-  const { firstname, lastname, email, password } = req.body;
+  const { pseudo, email, password } = req.body;
 
   // Checking balises HTML in the fields
-  if (containsHTML(firstname) || containsHTML(lastname) || containsHTML(email) || containsHTML(password)) {
+  if (containsHTML(pseudo) ||  containsHTML(email) || containsHTML(password)) {
     return res.status(400).json({ error: "Les balises HTML ne sont pas autorisées dans les champs" });
   }
 
@@ -36,8 +36,7 @@ router.post('/signup', async (req: Request<{}, {}, SignupRequestBody>, res: Resp
 
     const newUser = await prisma.person.create({
       data: {
-        firstname:capitalize(firstname),
-        lastname:capitalize(lastname),
+        pseudo:capitalize(pseudo),
         email:email.toLowerCase(),
         password: hashedPassword,
       },

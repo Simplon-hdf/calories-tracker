@@ -299,3 +299,22 @@ a {
   border-radius: 0.5rem;
   cursor: pointer;
 }
+
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.input-number {
+  margin-right: 5px; /* Ajuster selon l'espacement souhaité */
+  width: 50px;
+}
+
+.input-unit {
+  font-size: 0.9rem;
+  margin: 0 20px 0 0;
+}
+
+input[type="radio"] {
+  margin: 10px 0 10px 10px;
+}

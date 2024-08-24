@@ -13,11 +13,11 @@ CREATE TABLE "Product" (
 );
 
 -- CreateTable
-CREATE TABLE "Product_Categories" (
+CREATE TABLE "Product_Category" (
     "id_product_category" SERIAL NOT NULL,
     "name" VARCHAR(50) NOT NULL,
 
-    CONSTRAINT "Product_Categorie_pkey" PRIMARY KEY ("id_product_category")
+    CONSTRAINT "Product_Category_pkey" PRIMARY KEY ("id_product_category")
 );
 
 -- CreateTable
@@ -53,6 +53,7 @@ CREATE TABLE "Admin" (
 -- CreateTable
 CREATE TABLE "Customer" (
     "uuid" INTEGER NOT NULL,
+    "uuid_person" INTEGER NOT NULL,
     "phone" VARCHAR(20),
     "weight" DECIMAL(4,1) NOT NULL,
     "height" DECIMAL(3,0) NOT NULL,
@@ -131,13 +132,16 @@ CREATE TABLE "Customer_Product" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Product_Categorie_name_key" ON "Product_Categorie"("name");
+CREATE UNIQUE INDEX "Product_Category_name_key" ON "Product_Category"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Person_email_key" ON "Person"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Admin_uuid_key" ON "Admin"("uuid");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Customer_uuid_person_key" ON "Customer"("uuid_person");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Customer_phone_key" ON "Customer"("phone");
@@ -152,7 +156,7 @@ CREATE UNIQUE INDEX "Daily_Consumption_uuid_key" ON "Daily_Consumption"("uuid");
 ALTER TABLE "Admin" ADD CONSTRAINT "Admin_uuid_fkey" FOREIGN KEY ("uuid") REFERENCES "Person"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Customer" ADD CONSTRAINT "Customer_uuid_fkey" FOREIGN KEY ("uuid") REFERENCES "Person"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Customer" ADD CONSTRAINT "Customer_uuid_person_fkey" FOREIGN KEY ("uuid_person") REFERENCES "Person"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Customer" ADD CONSTRAINT "Customer_id_admin_fkey" FOREIGN KEY ("id_admin") REFERENCES "Admin"("id_admin") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -179,7 +183,7 @@ ALTER TABLE "Meal_Product" ADD CONSTRAINT "Meal_Product_id_meal_fkey" FOREIGN KE
 ALTER TABLE "Product_Category_Product" ADD CONSTRAINT "Product_Category_Product_id_product_fkey" FOREIGN KEY ("id_product") REFERENCES "Product"("id_product") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Product_Category_Product" ADD CONSTRAINT "Product_Category_Product_id_product_category_fkey" FOREIGN KEY ("id_product_category") REFERENCES "Product_Categorie"("id_product_category") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Product_Category_Product" ADD CONSTRAINT "Product_Category_Product_id_product_category_fkey" FOREIGN KEY ("id_product_category") REFERENCES "Product_Category"("id_product_category") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Admin_Product" ADD CONSTRAINT "Admin_Product_id_product_fkey" FOREIGN KEY ("id_product") REFERENCES "Product"("id_product") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -192,4 +196,3 @@ ALTER TABLE "Customer_Product" ADD CONSTRAINT "Customer_Product_uuid_fkey" FOREI
 
 -- AddForeignKey
 ALTER TABLE "Customer_Product" ADD CONSTRAINT "Customer_Product_id_product_fkey" FOREIGN KEY ("id_product") REFERENCES "Product"("id_product") ON DELETE RESTRICT ON UPDATE CASCADE;
-

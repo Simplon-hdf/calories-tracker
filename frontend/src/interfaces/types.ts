@@ -1,10 +1,13 @@
 import { ReactNode } from "react";
 
-export interface SignupFormData {
-  firstname: string;
-  lastname: string;
+export interface SignupCustomerFormData {
+  pseudo: string;
   email: string;
   password: string;
+  weight: number;
+  height: number;
+  gender: string;
+  birthDate: string;
 }
 
 export interface LoginFormData {
@@ -26,7 +29,7 @@ export interface AuthProviderProps {
 // Type definition for the user context
 export interface UserContextType {
   user: { firstname: string, lastname: string } | null;
-  setUser: React.Dispatch<React.SetStateAction<{ firstname: string, lastname: string, email:string } | null>>;
+  setUser: React.Dispatch<React.SetStateAction<{ firstname: string, lastname: string, email: string } | null>>;
   logout: () => void;
 }
 
@@ -41,6 +44,6 @@ export interface LoginResponse {
 }
 
 export interface ProgramProps {
-  title: string; 
+  title: string;
   paragraph: string;
 }

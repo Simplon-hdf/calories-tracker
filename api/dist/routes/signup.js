@@ -1,8 +1,13 @@
-import { Router } from 'express';
-import bcrypt from 'bcryptjs';
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
-const router = Router();
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
+const router = (0, express_1.Router)();
 // Function to check balises HTML
 const containsHTML = (str) => {
     const regex = /<[^>]*>/g;
@@ -13,9 +18,9 @@ const capitalize = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
 router.post('/signup', async (req, res) => {
-    const { firstname, lastname, email, password } = req.body;
+    const { pseudo, email, password } = req.body;
     // Checking balises HTML in the fields
-    if (containsHTML(firstname) || containsHTML(lastname) || containsHTML(email) || containsHTML(password)) {
+    if (containsHTML(pseudo) || containsHTML(email) || containsHTML(password)) {
         return res.status(400).json({ error: "Les balises HTML ne sont pas autorisées dans les champs" });
     }
     try {
@@ -23,11 +28,10 @@ router.post('/signup', async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ error: 'Email est déjà utilisée' });
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcryptjs_1.default.hash(password, 10);
         const newUser = await prisma.person.create({
             data: {
-                firstname: capitalize(firstname),
-                lastname: capitalize(lastname),
+                pseudo: capitalize(pseudo),
                 email: email.toLowerCase(),
                 password: hashedPassword,
             },
@@ -38,4 +42,4 @@ router.post('/signup', async (req, res) => {
         res.status(500).json({ error: "Echec de creation d'utilisateur" });
     }
 });
-export default router;
+exports.default = router;

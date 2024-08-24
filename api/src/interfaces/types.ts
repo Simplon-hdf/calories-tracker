@@ -1,8 +1,7 @@
 
 // Interface to type the request body
 export interface SignupRequestBody {
-    firstname: string;
-    lastname: string;
+    pseudo: string;
     email: string;
     password: string;
 };

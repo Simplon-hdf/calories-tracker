@@ -3,26 +3,31 @@ import cors from 'cors';
 import signupRoute from './routes/signup.js';
 import loginRoute from './routes/login.js';
 import dotenv from 'dotenv';
-// import profileRoute from './routes/profile.js'
-// import authMiddleware from './middlewares/authmiddleware.js';
+import customerRoutes from './routes/customerRoutes.js';
 
 dotenv.config();
+console.log('Bonjour');
+
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = parseInt(process.env.PORT || '3001', 10);
+const ip = process.env.IP || 'localhost';
+
+// Configure the authorised origin for CORS
+const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:8080';
 
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:3000'
+  origin: allowedOrigin
 }));
 
 // Utilisation de la route signup
 app.use('/api', signupRoute);
 // Utilisation de la route login
 app.use('/api', loginRoute);
-// Utilisation de la route profile
-// app.use('/api', authMiddleware, profileRoute);
+// Utilisation de la route for Persons
+app.use('/api',  customerRoutes);
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+app.listen(port, ip, () => {
+  console.log(`Server en cours d'exécution sur http://${ip}:${port}`);
 });
