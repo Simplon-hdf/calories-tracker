@@ -49,6 +49,10 @@ jobs:
           sudo curl -L "https://github.com/docker/compose/releases/download/v2.11.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
 
+      - name: Validate Docker Build
+        run: |
+          docker compose config -q
+
       # Étape pour arrêter les conteneurs existants, construire les images Docker et redémarrer les conteneurs
       - name: Build and push Docker images
         run: |
@@ -66,25 +70,51 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # - name: Send files to server
+      #   uses: appleboy/scp-action@master
+      #   with:
+      #     host: ${{ secrets.VPS_HOST }}
+      #     port: ${{ secrets.VPS_PORT }}
+      #     username: ${{ secrets.VPS_USER }}
+      #     password: ${{ secrets.VPS_SSH_KEY }}
+      #     source: ./
+      #     target: calories-tracker
       - name: Send files to server
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.VPS_HOST }}
-          port: ${{ secrets.VPS_PORT }}
-          username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_SSH_KEY }}
-          source: ./
-          target: calories-tracker
+        host: ${{ secrets.VPS_HOST }}
+        port: ${{ secrets.VPS_PORT }}
+        username: ${{ secrets.VPS_USER }}
+        key: ${{ secrets.VPS_SSH_KEY }} # Utilisation de la clé SSH
+        passphrase: ${{ secrets.VPS_SSH_PASSPHRASE }} # Si la clé SSH a une passphrase
+        source: ./
+        target: calories-tracker
 
+      # - name: Build Calories Tracker Image
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.VPS_HOST }}
+      #     port: ${{ secrets.VPS_PORT }}
+      #     username: ${{ secrets.VPS_USER }}
+      #     password: ${{ secrets.VPS_SSH_KEY }}
+      #     script: |
+      #       cd calories-tracker
+      #       sudo docker compose build --no-cache || exit 10
+      #       sudo docker compose down || exit 20
+      #       sudo docker compose up -d || exit 30
       - name: Build Calories Tracker Image
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.VPS_HOST }}
           port: ${{ secrets.VPS_PORT }}
           username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_SSH_KEY }}
+          key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd calories-tracker
+            export NODE_ENV=production # Par exemple, pour définir l'environnement de production
             sudo docker compose build --no-cache || exit 10
             sudo docker compose down || exit 20
             sudo docker compose up -d || exit 30
+      - name: Clean up Docker
+        run: |
+          sudo docker system prune -f

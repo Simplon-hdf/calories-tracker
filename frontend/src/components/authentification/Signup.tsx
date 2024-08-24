@@ -1,52 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { signupUser } from '../../services/authService';
-import { SignupFormData, AddressSuggestion } from '../../interfaces/types';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { SignupCustomerFormData } from '../../interfaces/types';
+import { signupCustomer } from '../../services/authService';
 
 /**
  * Signup component for user registration
  * @returns {JSX.Element}
  */
 function Signup(): JSX.Element {
-  const [formSignup, setFormSignup] = useState<SignupFormData>({
-    firstname: '',
-    lastname: '',
+  const [formSignup, setFormSignup] = useState<SignupCustomerFormData>({
+    pseudo: '',
     email: '',
     password: '',
-    phone: '',
-    weight: '',
-    height: '',
+    weight: 0,
+    height: 0,
     gender: '',
-    address: '',
-    city:'',
-    zip_code:''
+    birthDate: ''
   });
 
-  const [addressSuggestions, setAddressSuggestions] = useState<AddressSuggestion[]>([]);
-  const fetchAddressSuggestions = async (query: string) => {
-    try {
-      const response = await axios.get(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(query)}&limit=5`);
-      const suggestions: AddressSuggestion[] = response.data.features;
-      setAddressSuggestions(suggestions);
-    } catch (error) {
-      console.error("Erreur lors de la récupération des suggestions d'adresse:", error);
-    }
-  };
-
-  const handleAddressSelect = (selectedAddress: AddressSuggestion) => {
-    const { housenumber, street, postcode, city } = selectedAddress.properties;
-    
-    setFormSignup({
-      ...formSignup,
-      address: `${housenumber ? housenumber + ' ' : ''}${street}`, // Combinaison du numéro de maison et du nom de la rue
-      city: city, // La ville
-      zip_code: postcode, // Le code postal
-    });
-    
-    setAddressSuggestions([]); // Effacer les suggestions après la sélection
-  };
 
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -66,30 +38,35 @@ function Signup(): JSX.Element {
       ...formSignup,
       [name]: value,
     });
-    if (name === 'address' && value.length > 3) {
-      fetchAddressSuggestions(value);
-    }
   };
   const sanitizeInput = (value: string) => {
     const element = document.createElement('div');
     element.innerText = value;
     return element.innerHTML;
   };
+
+  const formatBirthDate = (dateStr: string): string => {
+    const date = new Date(dateStr);
+    const day = String(date.getDate()).padStart(2, '0'); // Ajouter un 0 si le jour est < 10
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Mois de 0 à 11, donc ajouter 1
+    const year = date.getFullYear();
+
+    return `${day}${month}${year}`;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const parsedDate = new Date(formSignup.birthDate)
     // Basic client-side validation
     if (
-      !formSignup.firstname ||
-      !formSignup.lastname ||
+      !formSignup.pseudo ||
       !formSignup.email ||
       !formSignup.password ||
-      !formSignup.phone ||
       !formSignup.weight ||
       !formSignup.height ||
       !formSignup.gender ||
-      !formSignup.address ||
-      !formSignup.city ||
-      !formSignup.zip_code
+      !formSignup.birthDate
     ) {
       setError('Tous les champs sont requis !');
       return;
@@ -100,29 +77,25 @@ function Signup(): JSX.Element {
       setError('Adresse mail est invalide !');
       return;
     }
+    const formattedBirthDate = formatBirthDate(formSignup.birthDate);
     // Sanitize inputs before sending to the server
     const sanitizedFormSignup = {
-      firstname: sanitizeInput(formSignup.firstname),
-      lastname: sanitizeInput(formSignup.lastname),
+      pseudo: sanitizeInput(formSignup.pseudo),
       email: sanitizeInput(formSignup.email),
       password: sanitizeInput(formSignup.password),
-      phone: sanitizeInput(formSignup.phone),
-      weight: sanitizeInput(formSignup.weight),
-      height: sanitizeInput(formSignup.height),
       gender: sanitizeInput(formSignup.gender),
-      address: sanitizeInput(formSignup.address),
-      city: sanitizeInput(formSignup.city),
-      zip_code: sanitizeInput(formSignup.zip_code),
-
+      weight: formSignup.weight,
+      height: formSignup.height,
+      birthDate: sanitizeInput(formattedBirthDate)
     };
     try {
-      await signupUser(sanitizedFormSignup);
+      await signupCustomer(sanitizedFormSignup);
       setSuccess('Vous vous êtes incrit(e) avec succès!');
       setError(null); // Clear any previous error
       setTimeout(() => {
         navigate('/'); // Redirect to the login page
       }, 1000);
-      setFormSignup({ firstname: '', lastname: '', email: '', password: '', phone: '', weight: '', height: '', gender: '', address: '',city: '', zip_code: '' }); // Reset the form
+      setFormSignup({ pseudo: '', email: '', password: '', weight: 0, height: 0, gender: '', birthDate: '' }); // Reset the form
     } catch (error) {
       console.error("Une erreur durant l'inscription:", error);
       setError("Echec d'inscription");
@@ -137,16 +110,9 @@ function Signup(): JSX.Element {
           {success && <p style={{ color: 'green' }}>{success}</p>}
           <input
             type="text"
-            name="firstname"
-            placeholder="Prénom"
-            value={formSignup.firstname}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="lastname"
-            placeholder="Nom"
-            value={formSignup.lastname}
+            name="pseudo"
+            placeholder="Pseudonyme"
+            value={formSignup.pseudo}
             onChange={handleChange}
           />
           <input
@@ -161,27 +127,6 @@ function Signup(): JSX.Element {
             name="password"
             placeholder="Mot de passe"
             value={formSignup.password}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="phone"
-            placeholder="Téléphone"
-            value={formSignup.phone}
-            onChange={handleChange}
-          />
-          <input
-            type="number"
-            name="weight"
-            placeholder="Masse en (kg)"
-            value={formSignup.weight}
-            onChange={handleChange}
-          />
-          <input
-            type="number"
-            name="height"
-            placeholder="Taille (cm)"
-            value={formSignup.height}
             onChange={handleChange}
           />
           <div className='container-label'>
@@ -204,22 +149,35 @@ function Signup(): JSX.Element {
               /> Femme
             </label>
           </div>
+          <div className="input-group">
+            <input
+              type="number"
+              name="weight"
+              placeholder="Masse"
+              value={formSignup.weight}
+              onChange={handleChange}
+              className="input-number"
+            />
+            <span className="input-unit">kg</span>
+          </div>
+          <div className="input-group">
+            <input
+              type="number"
+              name="height"
+              placeholder="Taille"
+              value={formSignup.height}
+              onChange={handleChange}
+              className="input-number"
+            />
+            <span className="input-unit">cm</span>
+          </div>
           <input
-            type="text"
-            name="address"
-            placeholder="Adresse"
-            value={formSignup.address}
+            type="date"
+            name="birthDate"
+            placeholder="Date de naissance"
+            value={formSignup.birthDate}
             onChange={handleChange}
           />
-          {addressSuggestions.length > 0 && (
-            <ul className="address-suggestions">
-              {addressSuggestions.map((suggestion, index) => (
-                <li key={index} onClick={() => handleAddressSelect(suggestion)}>
-                  {suggestion.properties.label}
-                </li>
-              ))}
-            </ul>
-          )}
           <Link to="/" className='link-login'>
             Déjà inscrit? <span>Clique <i>ici</i></span>
           </Link>

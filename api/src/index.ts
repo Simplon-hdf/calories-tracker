@@ -4,18 +4,17 @@ import signupRoute from './routes/signup.js';
 import loginRoute from './routes/login.js';
 import dotenv from 'dotenv';
 import customerRoutes from './routes/customerRoutes.js';
-// import profileRoute from './routes/profile.js'
-// import authMiddleware from './middlewares/authmiddleware.js';
 
 dotenv.config();
 console.log('Bonjour');
+
 
 const app = express();
 const port = parseInt(process.env.PORT || '3001', 10);
 const ip = process.env.IP || 'localhost';
 
 // Configure the authorised origin for CORS
-const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:3000';
+const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:8080';
 
 app.use(express.json());
 app.use(cors({

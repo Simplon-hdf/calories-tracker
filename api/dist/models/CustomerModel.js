@@ -1,25 +1,22 @@
-import { Customer, Person, PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
-
-export const CustomerModel = {
-
-    getAll: async (): Promise<Customer[]> => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CustomerModel = void 0;
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
+exports.CustomerModel = {
+    getAll: async () => {
         return await prisma.customer.findMany({
-            include: { Person: true}
+            include: { Person: true }
         });
     },
-
-    getById: async (uuid: number): Promise<Customer | null> => {
+    getById: async (uuid) => {
         return await prisma.customer.findUnique({
             where: { uuid },
             include: { Person: true }, // Include information from the linked Person table
         });
     },
-
-    create: async (data: { personData: Omit<Person, 'uuid'>; customerData :{ weight: number ; height: number; gender: string; birth_date: string; id_admin?: number | null;}; }): Promise<Customer> => {
+    create: async (data) => {
         const { personData, customerData } = data;
-
         // Create the person
         const createdPerson = await prisma.person.create({
             data: personData,
@@ -29,14 +26,11 @@ export const CustomerModel = {
             data: {
                 ...customerData,
                 uuid: createdPerson.uuid, // Link customer to created Person
-
             },
         });
     },
-    
-    update: async (uuid: number, data: Partial<Customer> & { personData?: Partial<Person> }): Promise<Customer> => {
+    update: async (uuid, data) => {
         const { personData, ...customerData } = data;
-
         if (personData) {
             // Update datas in the table "Person"
             await prisma.person.update({
@@ -50,19 +44,15 @@ export const CustomerModel = {
             data: customerData,
         });
     },
-
-    delete: async (uuid: number): Promise<Customer> => {
-
+    delete: async (uuid) => {
         // Delete Customer 
         const deletedCustomer = await prisma.customer.delete({
             where: { uuid },
         });
-
         // Delete Person associated to Customer
         await prisma.person.delete({
             where: { uuid },
         });
-
         return deletedCustomer;
     },
 };

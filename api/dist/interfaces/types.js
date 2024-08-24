@@ -1,11 +1,6 @@
-
-// Interface to type the request body
-export interface SignupRequestBody {
-    pseudo: string;
-    email: string;
-    password: string;
-};
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+;
 // // Extend the Request interface to add userId
 // declare module 'express-serve-static-core' {
 //     export interface Request {

@@ -1,21 +1,25 @@
 import { Router } from 'express';
-import customerController from '../controllers/customerController'
+import customerController from '../controllers/customerController';
+
+
 
 const router = Router();
 
+console.log('Je suis passé côté Backend');
+
 // Récupérer tous les clients
-router.get('/customers', customerController.getAll);
+router.get('/customers/', customerController.getAll);
 
 // Récupérer un client par UUID
-router.get('/customers/:uuid', customerController.getById);
+router.get('/customers/', customerController.getById);
 
 // Créer un nouveau client
 router.post('/customers', customerController.create);
 
 // Mettre à jour un client existant
-router.put('/customers/:uuid', customerController.update);
+router.put('/customers', customerController.update);
 
 // Supprimer un client
-router.delete('/customers/:uuid', customerController.delete);
+router.delete('/customers', customerController.delete);
 
 export default router;

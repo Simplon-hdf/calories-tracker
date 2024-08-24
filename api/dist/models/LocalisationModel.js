@@ -1,7 +1,6 @@
+"use strict";
 // import { Localisation, PrismaClient } from "@prisma/client";
-
 // const prisma = new PrismaClient();
-
 // export const LocalisationModel = {
 //     getAll: async (): Promise<Localisation[]> => {
 //         return await prisma.localisation.findMany();

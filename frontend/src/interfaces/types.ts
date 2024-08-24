@@ -1,28 +1,13 @@
 import { ReactNode } from "react";
 
-export interface SignupFormData {
-  firstname: string;
-  lastname: string;
+export interface SignupCustomerFormData {
+  pseudo: string;
   email: string;
   password: string;
-  phone: string;
-  weight: string;
-  height: string;
+  weight: number;
+  height: number;
   gender: string;
-  address: string;
-  city: string;
-  zip_code: string
-}
-
-export interface AddressSuggestion {
-  properties: {
-    label: string;
-    housenumber?: string;
-    street?: string;
-    postcode: string;
-    city: string;
-    context?: string;
-  };
+  birthDate: string;
 }
 
 export interface LoginFormData {

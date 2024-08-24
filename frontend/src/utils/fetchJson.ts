@@ -6,6 +6,7 @@
  * @throws An error if the request fails or if the response is not JSON.
  */
 export const fetchJson = async (url: string, options: RequestInit) => {
+  console.log(url)
     const response = await fetch(url, options);
     
     if (!response.ok) {
